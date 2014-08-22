@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import cn.bmob.im.bean.BmobChatUser;
 import cn.bmob.im.util.BmobLog;
 import cn.bmob.v3.listener.SaveListener;
@@ -32,7 +33,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	EditText et_username, et_password;
 	Button btn_login;
-	TextView btn_register;
+	TextView btn_register,btn_forgot;
 	BmobChatUser currentUser;
 
 	private MyBroadcastReceiver receiver = new MyBroadcastReceiver();
@@ -55,8 +56,20 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		et_password = (EditText) findViewById(R.id.et_password);
 		btn_login = (Button) findViewById(R.id.btn_login);
 		btn_register = (TextView) findViewById(R.id.btn_register);
+		btn_forgot = (TextView)findViewById(R.id.btn_forgotpsw);
 		btn_login.setOnClickListener(this);
 		btn_register.setOnClickListener(this);
+		
+//		test
+//		btn_forgot.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				Toast.makeText(getApplicationContext(), "!!!", Toast.LENGTH_LONG).show();
+//				Intent intent = new Intent(LoginActivity.this,MainInActivity.class);
+//				startActivity(intent);
+//			}
+//		});
 	}
 
 	public class MyBroadcastReceiver extends BroadcastReceiver {
@@ -121,7 +134,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				//更新用户的地理位置以及好友的资料
 				updateUserInfos();
 				progress.dismiss();
-				Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+				
+				Intent intent = new Intent(LoginActivity.this,MainInActivity.class);
 				startActivity(intent);
 				finish();
 			}
