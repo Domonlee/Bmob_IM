@@ -20,7 +20,7 @@
     
      <style name="ActionBar">
         <item name="android:orientation">horizontal</item>
-        <item name="android:background">@drawable/top_bar</item>
+        <item name="android:background">#05C0A7</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_height">@dimen/base_action_bar_height</item>
