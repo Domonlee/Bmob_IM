@@ -1,5 +1,10 @@
 package com.bmob.im.demo.ui;
 
+import com.bmob.im.demo.R;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
+
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,20 +14,16 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import cn.bmob.im.bean.BmobInvitation;
-import cn.bmob.im.bean.BmobMsg;
-import cn.bmob.im.inteface.EventListener;
+import android.widget.Toast;
 
-import com.bmob.im.demo.R;
-
-public class MainInActivity extends ActivityBase implements EventListener{
+public class MainInActivity extends SlidingFragmentActivity {
 	Button[] mTabs;
 
 	private int index;
 	private int currentTabIndex = 0;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -31,6 +32,7 @@ public class MainInActivity extends ActivityBase implements EventListener{
 		setContentView(R.layout.activity_main_in);
 
 		initView();
+		initSlidingMenu(savedInstanceState);
 
 		mTabs[3].setOnClickListener(new OnClickListener() {
 
@@ -74,6 +76,29 @@ public class MainInActivity extends ActivityBase implements EventListener{
 
 	}
 
+	/**
+	 * init the slidingmenu
+	 */
+	private void initSlidingMenu(Bundle saveInstanceState) {
+		// setting slidingmenu view
+		setBehindContentView(R.layout.menu_frame);
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.menu_frame, new LeftMenuBottomFragment())
+				.commit();
+
+		SlidingMenu sMenu = getSlidingMenu();
+
+		/*
+		 * 设置滑动阴影的宽度 设置滑动阴影的图像资源 设置滑动菜单视图的宽度 设置渐入渐出效果的值 设置触摸屏幕的模式
+		 */
+		sMenu.setShadowWidthRes(R.dimen.shadow_width);
+		sMenu.setShadowDrawable(R.drawable.shadow);
+		sMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		sMenu.setFadeDegree(0.35f);
+		sMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -93,37 +118,8 @@ public class MainInActivity extends ActivityBase implements EventListener{
 		return super.onOptionsItemSelected(item);
 	}
 
-	@Override
-	public void onAddUser(BmobInvitation arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onMessage(BmobMsg arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onNetChange(boolean arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onOffline() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onReaded(String arg0, String arg1) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	private static long firstTime;
+
 	/**
 	 * 连续按两次返回键就退出
 	 */
@@ -133,7 +129,7 @@ public class MainInActivity extends ActivityBase implements EventListener{
 		if (firstTime + 2000 > System.currentTimeMillis()) {
 			super.onBackPressed();
 		} else {
-			ShowToast("再按一次退出程序");
+			Toast.makeText(getApplicationContext(), "连续按两次返回键就退出", 1000).show();
 		}
 		firstTime = System.currentTimeMillis();
 	}

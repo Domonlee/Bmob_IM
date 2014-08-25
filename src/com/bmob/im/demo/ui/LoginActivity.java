@@ -60,16 +60,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		btn_login.setOnClickListener(this);
 		btn_register.setOnClickListener(this);
 		
-//		test
-//		btn_forgot.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				Toast.makeText(getApplicationContext(), "!!!", Toast.LENGTH_LONG).show();
-//				Intent intent = new Intent(LoginActivity.this,MainInActivity.class);
-//				startActivity(intent);
-//			}
-//		});
 	}
 
 	public class MyBroadcastReceiver extends BroadcastReceiver {
