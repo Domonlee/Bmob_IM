@@ -180,10 +180,6 @@
             android:name=".ui.LeftMenuBottomFragment"
             android:label="@string/title_activity_left_menu_bottom_fragment" >
         </activity>
-        <activity
-            android:name="com.bmob.im.demo.ui.FindActivity"
-            android:label="@string/title_activity_find" >
-        </activity>
     </application>
 
 </manifest>
