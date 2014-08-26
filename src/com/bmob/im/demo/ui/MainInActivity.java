@@ -14,13 +14,16 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainInActivity extends SlidingFragmentActivity {
-	Button[] mTabs;
-
-	private int index;
-	private int currentTabIndex = 0;
+	private Button[] bTabs;
+	private TextView[] tTabs, lTabs;
+	private int bindex, tindex, lindex;
+	private int currentbTabIndex = 0;
+	private int currentlTabIndex = 0;
+	private int currenttTabIndex = 0;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,7 +37,7 @@ public class MainInActivity extends SlidingFragmentActivity {
 		initView();
 		initSlidingMenu(savedInstanceState);
 
-		mTabs[3].setOnClickListener(new OnClickListener() {
+		bTabs[3].setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -43,37 +46,59 @@ public class MainInActivity extends SlidingFragmentActivity {
 				startActivity(intent);
 			}
 		});
+
+		bTabs[1].setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(MainInActivity.this,
+						FindActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 
 	private void initView() {
-		mTabs = new Button[4];
-		mTabs[0] = (Button) findViewById(R.id.btn_bm_shop);
-		mTabs[1] = (Button) findViewById(R.id.btn_bm_find);
-		mTabs[2] = (Button) findViewById(R.id.btn_bm_money);
-		mTabs[3] = (Button) findViewById(R.id.btn_bm_group);
+		bTabs = new Button[4];
+		bTabs[0] = (Button) findViewById(R.id.btn_bm_shop);
+		bTabs[1] = (Button) findViewById(R.id.btn_bm_find);
+		bTabs[2] = (Button) findViewById(R.id.btn_bm_money);
+		bTabs[3] = (Button) findViewById(R.id.btn_bm_group);
+
+		tTabs = new TextView[3];
+		tTabs[0] = (TextView) findViewById(R.id.tv_shop_top_1);
+		tTabs[1] = (TextView) findViewById(R.id.tv_shop_top_2);
+		tTabs[2] = (TextView) findViewById(R.id.tv_shop_top_3);
+
+		lTabs = new TextView[3];
+		lTabs[0] = (TextView) findViewById(R.id.btn_shop_location_myloca);
+		lTabs[1] = (TextView) findViewById(R.id.btn_shop_location_sort);
+		lTabs[2] = (TextView) findViewById(R.id.btn_shop_location_range);
+
 		// 把第一个tab设为选中状态
-		mTabs[0].setSelected(true);
+		bTabs[0].setSelected(true);
+		tTabs[0].setSelected(true);
+		lTabs[0].setSelected(true);
 	}
 
 	private void onTabSelect(View v) {
 		switch (v.getId()) {
 		case R.id.btn_bm_shop:
-			index = 0;
+			bindex = 0;
 			break;
 		case R.id.btn_bm_money:
-			index = 1;
+			bindex = 1;
 			break;
 		case R.id.btn_bm_find:
-			index = 2;
+			bindex = 2;
 			break;
 		case R.id.btn_bm_group:
-			index = 3;
+			bindex = 3;
 			break;
 		}
-		mTabs[currentTabIndex].setSelected(false);
-		mTabs[index].setSelected(true);
-		currentTabIndex = index;
-
+		bTabs[currentbTabIndex].setSelected(false);
+		bTabs[bindex].setSelected(true);
+		currentbTabIndex = bindex;
 	}
 
 	/**

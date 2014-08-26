@@ -80,6 +80,8 @@ public class LeftMenuBottomFragment extends Fragment {
 		}
 	}
 
+	//bind data in listview
+	
 	private void bindData() {
 
 		lv_Common.setAdapter(new CommonAdapter(mContext, commonModels));

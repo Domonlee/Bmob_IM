@@ -78,5 +78,6 @@
     <string name="voice_short_tips">录音时间太短</string>
     <string name="title_activity_main_in">MainInActivity</string>
     <string name="title_activity_left_menu_bottom_fragment">LeftMenuBottomFragment</string>
+    <string name="title_activity_find">FindActivity</string>
 
 </resources>

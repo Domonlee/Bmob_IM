@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:drawable="@drawable/shop_top_1_press" android:state_selected="true"></item>
+    <item android:drawable="@drawable/shop_top_1_normal"></item>
+
+</selector>
