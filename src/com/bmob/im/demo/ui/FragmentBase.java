@@ -52,7 +52,7 @@ public abstract class FragmentBase extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
+//		setRetainInstance(true);
 		mApplication = CustomApplcation.getInstance();
 		userManager = BmobUserManager.getInstance(getActivity());
 		manager = BmobChatManager.getInstance(getActivity());

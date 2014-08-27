@@ -10,8 +10,7 @@ import android.widget.TextView;
 import com.bmob.im.demo.R;
 import com.bmob.im.demo.ui.FragmentBase;
 
-public class ShopTopThreeragment extends FragmentBase {
-	private TextView textView;
+public class ShopTopThreeFragment extends FragmentBase {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,

@@ -11,12 +11,13 @@ import com.bmob.im.demo.R;
 import com.bmob.im.demo.ui.FragmentBase;
 
 public class ShopTopOneFragment extends FragmentBase {
-	private TextView textView;
+
+	private TextView[] lTabs ;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_find,container,false);
+		return inflater.inflate(R.layout.fragment_shop_groupby,container,false);
 	}
 
 	@Override
@@ -26,8 +27,14 @@ public class ShopTopOneFragment extends FragmentBase {
 	}
 
 	private void initView() {
-	}
 
+		lTabs = new TextView[3];
+		lTabs[0] = (TextView) findViewById(R.id.btn_shop_location_myloca);
+		lTabs[1] = (TextView) findViewById(R.id.btn_shop_location_sort);
+		lTabs[2] = (TextView) findViewById(R.id.btn_shop_location_range);
+		
+		lTabs[0].setSelected(true);
+	}
 
 	
 }

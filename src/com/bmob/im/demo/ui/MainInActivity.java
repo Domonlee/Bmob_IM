@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.bmob.im.demo.R;
 import com.bmob.im.demo.ui.fragment.FindFragment;
 import com.bmob.im.demo.ui.fragment.MoneyFragment;
-import com.bmob.im.demo.ui.fragment.ShopFragment;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
@@ -25,7 +24,7 @@ public class MainInActivity extends SlidingFragmentActivity {
 	private Fragment[] fragments;
 	private FindFragment findFragment;
 	private MoneyFragment moneyFragment;
-	private ShopFragment shopFragment;
+	private ShopGroupByActivity shopFragment;
 	private int bindex; 
 	private int currentbTabIndex = 0;
 
@@ -56,7 +55,7 @@ public class MainInActivity extends SlidingFragmentActivity {
 	private void initView() {
 		findFragment = new FindFragment();
 		moneyFragment = new MoneyFragment();
-		shopFragment = new ShopFragment();
+		shopFragment = new ShopGroupByActivity();
 		fragments = new Fragment[] { shopFragment, moneyFragment, findFragment };
 		// hide
 		getSupportFragmentManager().beginTransaction()
@@ -91,6 +90,7 @@ public class MainInActivity extends SlidingFragmentActivity {
 		// bindex = 3;
 		// break;
 		}
+		System.out.println("MainIN"+ bindex);
 		if (currentbTabIndex != bindex) {
 			FragmentTransaction trx = getSupportFragmentManager()
 					.beginTransaction();

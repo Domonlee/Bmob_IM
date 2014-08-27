@@ -11,7 +11,6 @@ import com.bmob.im.demo.R;
 import com.bmob.im.demo.ui.FragmentBase;
 
 public class ShopTopTwoFragment extends FragmentBase {
-	private TextView textView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,

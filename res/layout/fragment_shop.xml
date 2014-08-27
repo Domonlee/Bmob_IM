@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    tools:context="com.bmob.im.demo.ui.fragment.ShopFragment" >
+    tools:context="com.bmob.im.demo.ui.ShopGroupByActivity" >
 
     <!-- the shop top bar -->
     <LinearLayout 
@@ -74,60 +74,8 @@
 
     </LinearLayout>
     
-    <!-- the location tab -->
-    <LinearLayout 
-        android:id="@+id/layout_locationbar"
-        android:layout_width="fill_parent"
-        android:layout_height="35dp"
-        android:background="#00000000"
-        android:orientation="horizontal"
-        android:paddingTop="5dip"
-        android:layout_marginTop="5dip"
-        android:layout_below="@id/layout_shop_topbar"
-        >
-        <TextView 
-            android:id="@+id/btn_shop_location_myloca"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginLeft="20dip"
-            android:onClick="onlTabSelect"
-            android:drawableLeft="@drawable/btn_shop_location_myloca_selector"
-            android:text="我的位置"
-            android:textColor="@drawable/shop_location_text_color_selector"
-            android:textSize="14sp"
-            />
-        <TextView 
-            android:id="@+id/btn_shop_location_sort"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="onlTabSelect"
-            android:drawableLeft="@drawable/btn_shop_location_sort_selector"
-            android:text="智能排序"
-            android:textColor="@drawable/shop_location_text_color_selector"
-            android:textSize="14sp"
-            />
-        <TextView 
-            android:id="@+id/btn_shop_location_range"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="onlTabSelect"
-            android:drawableLeft="@drawable/btn_shop_location_range_selector"
-            android:text="范围"
-            android:textColor="@drawable/shop_location_text_color_selector"
-            android:textSize="14sp"
-            />
-        
-    </LinearLayout>
+  
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:background="#50C0A7" 
-        android:layout_below="@id/layout_locationbar"
-        ></TextView>
     
     <RelativeLayout 
         android:id="@+id/shop_fragment_container"
