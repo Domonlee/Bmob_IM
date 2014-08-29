@@ -1,4 +1,4 @@
-package com.bmob.im.demo.ui;
+package com.bmob.im.demo.ui.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -20,13 +22,19 @@ import com.bmob.im.demo.adapter.CommonAdapter;
 import com.bmob.im.demo.adapter.SettingAdapter;
 import com.bmob.im.demo.model.ItemCommon;
 import com.bmob.im.demo.model.ItemSetting;
+import com.bmob.im.demo.ui.ExchangeInfoActivity;
+import com.bmob.im.demo.ui.GroupbyCodeInfoActivity;
+import com.bmob.im.demo.ui.MyInviteInfoActivity;
+import com.bmob.im.demo.ui.MyshareInfoActivity;
+import com.bmob.im.demo.ui.OrderInfoActivity;
+import com.bmob.im.demo.ui.UserInfoActivity;
 
 public class LeftMenuBottomFragment extends Fragment {
 
 	private View mView;
 	private ListView lv_Common, lv_Setting;
 	private Context mContext;
-	
+
 	private RelativeLayout topbarLayout;
 
 	private List<ItemCommon> commonModels;
@@ -41,8 +49,44 @@ public class LeftMenuBottomFragment extends Fragment {
 			initView();
 			initValiData();
 			bindData();
-			
-			
+
+			lv_Common.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					Intent mIntent = null;
+					switch (position) {
+					case 0:
+						mIntent = new Intent(getActivity(),
+								OrderInfoActivity.class);
+						break;
+					case 1:
+						mIntent = new Intent(getActivity(),
+								GroupbyCodeInfoActivity.class);
+						break;
+
+					case 2:
+						mIntent = new Intent(getActivity(),
+								ExchangeInfoActivity.class);
+						break;
+
+					case 3:
+						mIntent = new Intent(getActivity(),
+								MyInviteInfoActivity.class);
+						break;
+
+					case 4:
+						mIntent = new Intent(getActivity(),
+								MyshareInfoActivity.class);
+						break;
+					}
+					startActivity(mIntent);
+					getActivity().overridePendingTransition(
+							R.anim.push_left_in, R.anim.push_left_out);
+				}
+			});
+
 		}
 		return mView;
 	}
@@ -50,25 +94,26 @@ public class LeftMenuBottomFragment extends Fragment {
 	private void initView() {
 		lv_Common = (ListView) mView.findViewById(R.id.left_listview_common);
 		lv_Setting = (ListView) mView.findViewById(R.id.left_listview_setting);
-		
-		topbarLayout = (RelativeLayout)mView.findViewById(R.id.layout_left_menu_topbar);	
+
+		topbarLayout = (RelativeLayout) mView
+				.findViewById(R.id.layout_left_menu_topbar);
 		topbarLayout.setOnClickListener(new ButtonListener());
 	}
-	
-	public class ButtonListener implements OnClickListener{
+
+	public class ButtonListener implements OnClickListener {
 
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.layout_left_menu_topbar:
-				Intent goUserInfoIntent = new Intent(getActivity(),UserInfoActivity.class);
+				Intent goUserInfoIntent = new Intent(getActivity(),
+						UserInfoActivity.class);
 				startActivity(goUserInfoIntent);
-				
 				break;
+
 			}
 		}
 	}
-
 
 	private void initValiData() {
 		mContext = mView.getContext();
@@ -103,11 +148,10 @@ public class LeftMenuBottomFragment extends Fragment {
 		}
 	}
 
-	//bind data in listview
+	// bind data in listview
 	private void bindData() {
 		lv_Common.setAdapter(new CommonAdapter(mContext, commonModels));
 		lv_Setting.setAdapter(new SettingAdapter(mContext, settingsModels));
 	}
-	
 
 }

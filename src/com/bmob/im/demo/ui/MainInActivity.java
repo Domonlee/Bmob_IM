@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.bmob.im.demo.R;
 import com.bmob.im.demo.ui.fragment.FindFragment;
+import com.bmob.im.demo.ui.fragment.LeftMenuBottomFragment;
 import com.bmob.im.demo.ui.fragment.MoneyFragment;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.CanvasTransformer;
@@ -151,17 +152,6 @@ public class MainInActivity extends SlidingFragmentActivity {
 		};
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		switch (id) {
-		case R.id.home:
-			toggle();
-
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
 
 	private static long firstTime;
 

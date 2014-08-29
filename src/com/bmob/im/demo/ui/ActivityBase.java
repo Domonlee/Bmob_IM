@@ -1,8 +1,12 @@
 package com.bmob.im.demo.ui;
 
+import com.bmob.im.demo.R;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import cn.bmob.im.BmobUserManager;
@@ -53,6 +57,17 @@ public class ActivityBase extends BaseActivity {
 			if (getCurrentFocus() != null)
 				manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 		}
+	}
+	
+	class BackOnClickListener implements OnClickListener{
+
+		@Override
+		public void onClick(View v) {
+			
+			finish();
+			overridePendingTransition(R.anim.push_left_out,R.anim.push_left_in);  
+		}
+		
 	}
 	
 }
