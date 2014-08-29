@@ -1,6 +1,7 @@
 package com.bmob.im.demo.ui;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +18,7 @@ import com.bmob.im.demo.R;
 import com.bmob.im.demo.ui.fragment.FindFragment;
 import com.bmob.im.demo.ui.fragment.MoneyFragment;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.CanvasTransformer;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
 public class MainInActivity extends SlidingFragmentActivity {
@@ -25,8 +27,10 @@ public class MainInActivity extends SlidingFragmentActivity {
 	private FindFragment findFragment;
 	private MoneyFragment moneyFragment;
 	private ShopGroupByActivity shopFragment;
-	private int bindex; 
+	private int bindex;
 	private int currentbTabIndex = 0;
+
+	private CanvasTransformer mCanvasTransformer;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,7 @@ public class MainInActivity extends SlidingFragmentActivity {
 		setContentView(R.layout.activity_main_in);
 
 		initView();
+		initAnimation();
 		initSlidingMenu(savedInstanceState);
 
 		bTabs[3].setOnClickListener(new OnClickListener() {
@@ -70,7 +75,6 @@ public class MainInActivity extends SlidingFragmentActivity {
 		bTabs[2] = (Button) findViewById(R.id.btn_bm_find);
 		bTabs[3] = (Button) findViewById(R.id.btn_bm_group);
 
-
 		// 把第一个tab设为选中状态
 		bTabs[0].setSelected(true);
 	}
@@ -90,7 +94,7 @@ public class MainInActivity extends SlidingFragmentActivity {
 		// bindex = 3;
 		// break;
 		}
-		System.out.println("MainIN"+ bindex);
+		System.out.println("MainIN" + bindex);
 		if (currentbTabIndex != bindex) {
 			FragmentTransaction trx = getSupportFragmentManager()
 					.beginTransaction();
@@ -126,18 +130,34 @@ public class MainInActivity extends SlidingFragmentActivity {
 		sMenu.setFadeDegree(0.35f);
 		sMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 
+		sMenu.setBehindScrollScale(0.0f);
+		sMenu.setBehindCanvasTransformer(mCanvasTransformer);
+
+		setSlidingActionBarEnabled(true);
+
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main_in, menu);
-		return true;
+	/**
+	 * 初始化动画效果
+	 */
+	private void initAnimation() {
+		mCanvasTransformer = new CanvasTransformer() {
+			@Override
+			public void transformCanvas(Canvas canvas, float percentOpen) {
+				float scale = (float) (percentOpen * 0.25 + 0.75);
+				canvas.scale(scale, scale, canvas.getWidth() / 2,
+						canvas.getHeight() / 2);
+			}
+		};
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		switch (id) {
+		case R.id.home:
+			toggle();
+
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

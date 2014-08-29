@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_left_menu_topbar"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content" >
 
@@ -8,6 +9,7 @@
         style="@style/Smile.ImageView"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:onClick="onLeftMenuTopSelect"
         android:padding="5dp"
         android:layout_centerVertical="true"
         android:src="@drawable/head" />

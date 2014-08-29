@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
 import com.bmob.im.demo.R;
 import com.bmob.im.demo.adapter.CommonAdapter;
@@ -25,6 +26,8 @@ public class LeftMenuBottomFragment extends Fragment {
 	private View mView;
 	private ListView lv_Common, lv_Setting;
 	private Context mContext;
+	
+	private RelativeLayout topbarLayout;
 
 	private List<ItemCommon> commonModels;
 	private List<ItemSetting> settingsModels;
@@ -38,6 +41,8 @@ public class LeftMenuBottomFragment extends Fragment {
 			initView();
 			initValiData();
 			bindData();
+			
+			
 		}
 		return mView;
 	}
@@ -45,7 +50,25 @@ public class LeftMenuBottomFragment extends Fragment {
 	private void initView() {
 		lv_Common = (ListView) mView.findViewById(R.id.left_listview_common);
 		lv_Setting = (ListView) mView.findViewById(R.id.left_listview_setting);
+		
+		topbarLayout = (RelativeLayout)mView.findViewById(R.id.layout_left_menu_topbar);	
+		topbarLayout.setOnClickListener(new ButtonListener());
 	}
+	
+	public class ButtonListener implements OnClickListener{
+
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.layout_left_menu_topbar:
+				Intent goUserInfoIntent = new Intent(getActivity(),UserInfoActivity.class);
+				startActivity(goUserInfoIntent);
+				
+				break;
+			}
+		}
+	}
+
 
 	private void initValiData() {
 		mContext = mView.getContext();
@@ -81,12 +104,10 @@ public class LeftMenuBottomFragment extends Fragment {
 	}
 
 	//bind data in listview
-	
 	private void bindData() {
-
 		lv_Common.setAdapter(new CommonAdapter(mContext, commonModels));
 		lv_Setting.setAdapter(new SettingAdapter(mContext, settingsModels));
-
 	}
+	
 
 }
