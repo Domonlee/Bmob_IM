@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.bmob.im.demo.R;
+import com.bmob.im.demo.ui.LeftMenuInfoActivityBase.SlidingBackListener;
 
-public class MyInviteInfoActivity extends ActivityBase {
+public class MyInviteInfoActivity extends LeftMenuInfoActivityBase{
 
 	private ImageView btnBack;
 	@Override
@@ -20,6 +22,9 @@ public class MyInviteInfoActivity extends ActivityBase {
 		
 		initView();
 		btnBack.setOnClickListener(new BackOnClickListener());
+		
+		RelativeLayout layout = (RelativeLayout) findViewById(R.id.fragment_order_container);
+		layout.setOnTouchListener(new SlidingBackListener());
 	}
 
 	private void initView() {

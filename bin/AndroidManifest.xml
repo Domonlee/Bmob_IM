@@ -196,7 +196,10 @@
             android:name="com.bmob.im.demo.ui.ExchangeInfoActivity" >
         </activity>
         <activity
-            android:name="com.bmob.im.demo.ui.MyshareInfoActivity" >
+            android:name="com.bmob.im.demo.ui.MessageInfoActivity" >
+        </activity>
+        <activity
+            android:name="com.bmob.im.demo.ui.SettingInfoActivity" >
         </activity>
     </application>
 

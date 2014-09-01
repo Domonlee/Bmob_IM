@@ -24,9 +24,11 @@ import com.bmob.im.demo.model.ItemCommon;
 import com.bmob.im.demo.model.ItemSetting;
 import com.bmob.im.demo.ui.ExchangeInfoActivity;
 import com.bmob.im.demo.ui.GroupbyCodeInfoActivity;
+import com.bmob.im.demo.ui.MessageInfoActivity;
 import com.bmob.im.demo.ui.MyInviteInfoActivity;
 import com.bmob.im.demo.ui.MyshareInfoActivity;
 import com.bmob.im.demo.ui.OrderInfoActivity;
+import com.bmob.im.demo.ui.SettingInfoActivity;
 import com.bmob.im.demo.ui.UserInfoActivity;
 
 public class LeftMenuBottomFragment extends Fragment {
@@ -82,6 +84,28 @@ public class LeftMenuBottomFragment extends Fragment {
 						break;
 					}
 					startActivity(mIntent);
+					getActivity().overridePendingTransition(
+							R.anim.push_left_in, R.anim.push_left_out);
+				}
+			});
+
+			lv_Setting.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					Intent myIntent = null;
+					switch (position) {
+					case 0:
+						myIntent = new Intent(getActivity(),
+								MessageInfoActivity.class);
+						break;
+					case 1:
+						myIntent = new Intent(getActivity(),
+								SettingInfoActivity.class);
+						break;
+					}
+					startActivity(myIntent);
 					getActivity().overridePendingTransition(
 							R.anim.push_left_in, R.anim.push_left_out);
 				}

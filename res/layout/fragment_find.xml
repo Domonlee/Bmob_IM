@@ -24,9 +24,9 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:layout_weight="9"
             android:gravity="center"
-            android:layout_gravity="center_vertical"
             android:text="发现"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
@@ -56,6 +56,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dip"
             android:layout_marginTop="10dip"
+            android:paddingTop="18dip"
             android:background="#FFFFFF"
             android:drawableLeft="@drawable/btn_find_myfriend_icon"
             android:paddingLeft="10dip"
@@ -75,7 +76,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dip"
-            android:layout_marginTop="12dip"
+            android:layout_marginTop="18dip"
             android:background="#FFFFFF"
             android:drawableLeft="@drawable/btn_find_groupby_icon"
             android:paddingLeft="10dip"
@@ -95,7 +96,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dip"
-            android:layout_marginTop="12dip"
+            android:layout_marginTop="18dip"
             android:background="#FFFFFF"
             android:drawableLeft="@drawable/btn_find_messagepush_icon"
             android:paddingLeft="10dip"
@@ -104,6 +105,9 @@
             android:textSize="17sp" />
     </LinearLayout>
 
+
+</RelativeLayout>
+    <!--
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -148,6 +152,4 @@
             android:textColor="#000000"
             android:textSize="17sp" />
 
-    </LinearLayout>
-
-</RelativeLayout>
+-->

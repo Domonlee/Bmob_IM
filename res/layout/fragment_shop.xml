@@ -18,7 +18,6 @@
             android:layout_width="16dp"
             android:layout_height="32dp"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
             android:src="@drawable/menu_icon" />
         
         <TextView 
@@ -69,7 +68,6 @@
             android:layout_height="32dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/shop_top_share"
-            android:layout_weight="1"
             />
 
     </LinearLayout>

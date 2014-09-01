@@ -152,7 +152,6 @@ public class MainInActivity extends SlidingFragmentActivity {
 		};
 	}
 
-
 	private static long firstTime;
 
 	/**

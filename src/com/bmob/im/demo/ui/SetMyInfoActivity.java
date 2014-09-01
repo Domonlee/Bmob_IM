@@ -85,7 +85,8 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			getWindow().getDecorView().setSystemUiVisibility(
 					View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 		}
-		setContentView(R.layout.activity_set_info);
+//		setContentView(R.layout.activity_set_info);
+		setContentView(R.layout.activity_user_info);
 		from = getIntent().getStringExtra("from");//me add other
 		username = getIntent().getStringExtra("username");
 		initView();

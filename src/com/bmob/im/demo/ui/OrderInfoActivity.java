@@ -3,11 +3,13 @@ package com.bmob.im.demo.ui;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bmob.im.demo.R;
@@ -46,7 +48,11 @@ import com.bmob.im.demo.ui.fragment.OrderTopTwoFragment;
 //别人笑我忒疯癫，我笑自己命太贱；  
 //不见满街漂亮妹，哪个归得程序员？  
 
-public class OrderInfoActivity extends ActivityBase {
+/**
+ * @author Domon
+ *
+ */
+public class OrderInfoActivity extends LeftMenuInfoActivityBase {
 	private OrderTopOneFragment oneFragment;
 	private OrderTopTwoFragment twoFragment;
 	private OrderTopThreeFragment threeFragment;
@@ -61,7 +67,7 @@ public class OrderInfoActivity extends ActivityBase {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -74,6 +80,8 @@ public class OrderInfoActivity extends ActivityBase {
 
 		btnBack.setOnClickListener(new BackOnClickListener());
 
+		RelativeLayout layout = (RelativeLayout) findViewById(R.id.fragment_order_container);
+		layout.setOnTouchListener(new SlidingBackListener());
 	}
 
 	private void initView() {
@@ -140,7 +148,8 @@ public class OrderInfoActivity extends ActivityBase {
 	}
 
 	/**
-	 * 
+	 * @param t
+	 * @param c
 	 */
 	public void selectFargment(int t, int c) {
 		if (cIndex != index) {
@@ -155,4 +164,9 @@ public class OrderInfoActivity extends ActivityBase {
 		cIndex = index;
 	}
 
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+
+		return super.onTouchEvent(event);
+	}
 }
