@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true" android:drawable="@drawable/base_action_bar_back_bg_p" />
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+	原始细款返回按钮
+	<item android:state_pressed="true" android:drawable="@drawable/base_action_bar_back_bg_p" />
     <item android:state_focused="true" android:drawable="@drawable/base_action_bar_back_bg_p" />
-    <item android:drawable="@drawable/base_action_bar_back_bg_n" />
+    <item android:drawable="@drawable/base_action_bar_back_bg_n" />息
+    -->
+
+    <item android:drawable="@drawable/shop_top_back_icon" android:state_pressed="true"/>
+    <item android:drawable="@drawable/shop_top_back_icon" android:state_focused="true"/>
+    <item android:drawable="@drawable/shop_top_back_icon"/>
+
 </selector>

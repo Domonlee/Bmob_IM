@@ -23,6 +23,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
@@ -32,6 +33,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import cn.bmob.im.BmobChatManager;
 import cn.bmob.im.db.BmobDB;
 import cn.bmob.im.inteface.MsgTag;
@@ -44,6 +46,7 @@ import cn.bmob.v3.listener.UploadFileListener;
 
 import com.bmob.im.demo.CustomApplcation;
 import com.bmob.im.demo.R;
+import com.bmob.im.demo.R.id;
 import com.bmob.im.demo.bean.User;
 import com.bmob.im.demo.config.BmobConstants;
 import com.bmob.im.demo.util.CollectionUtils;
@@ -64,12 +67,15 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 @SuppressLint("SimpleDateFormat")
 public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 
-	TextView tv_set_name, tv_set_nick, tv_set_gender;
+	TextView tv_set_name, tv_set_nick, tv_set_gender, tv_set_useraddr,
+			tv_set_userbir, tv_set_usersendaddr, tv_set_usermail,tv_show_usertele;
 	ImageView iv_set_avator, iv_arraw, iv_nickarraw;
 	LinearLayout layout_all;
 
-	Button btn_chat, btn_back, btn_add_friend;
-	RelativeLayout layout_head, layout_nick, layout_gender, layout_black_tips;
+	Button btn_chat, btn_black, btn_add_friend;
+	RelativeLayout layout_head, layout_nick, layout_gender, layout_black_tips,
+			layout_useraddr, layout_userbir, layout_usersendaddr,
+			layout_usertelenum, layout_usermail, layout_changepsw;
 
 	String from = "";
 	String username = "";
@@ -85,9 +91,12 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			getWindow().getDecorView().setSystemUiVisibility(
 					View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 		}
-//		setContentView(R.layout.activity_set_info);
-		setContentView(R.layout.activity_user_info);
-		from = getIntent().getStringExtra("from");//me add other
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//		requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+		setContentView(R.layout.activity_set_info);
+		from = getIntent().getStringExtra("from");// me add other
 		username = getIntent().getStringExtra("username");
 		initView();
 	}
@@ -99,49 +108,70 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		iv_nickarraw = (ImageView) findViewById(R.id.iv_nickarraw);
 		tv_set_name = (TextView) findViewById(R.id.tv_set_name);
 		tv_set_nick = (TextView) findViewById(R.id.tv_set_nick);
+		tv_set_useraddr = (TextView) findViewById(R.id.tv_set_useraddr);
+		tv_set_userbir = (TextView) findViewById(R.id.tv_set_userbir);
+		tv_set_usersendaddr = (TextView) findViewById(R.id.tv_set_usersendaddr);
+		tv_set_usermail = (TextView) findViewById(R.id.tv_set_usermail);
+		tv_show_usertele = (TextView)findViewById(R.id.tv_show_usertelenum);
+
 		layout_head = (RelativeLayout) findViewById(R.id.layout_head);
 		layout_nick = (RelativeLayout) findViewById(R.id.layout_nick);
 		layout_gender = (RelativeLayout) findViewById(R.id.layout_gender);
+		layout_useraddr = (RelativeLayout) findViewById(R.id.layout_useraddr);
+		layout_userbir = (RelativeLayout) findViewById(R.id.layout_userbir);
+		layout_usersendaddr = (RelativeLayout) findViewById(R.id.layout_usersendaddr);
+		layout_usertelenum = (RelativeLayout) findViewById(R.id.layout_usertelenum);
+		layout_usermail = (RelativeLayout) findViewById(R.id.layout_usermail);
+		layout_changepsw = (RelativeLayout) findViewById(R.id.layout_changepsw);
+
 		// 黑名单提示语
 		layout_black_tips = (RelativeLayout) findViewById(R.id.layout_black_tips);
 		tv_set_gender = (TextView) findViewById(R.id.tv_set_gender);
 		btn_chat = (Button) findViewById(R.id.btn_chat);
-		btn_back = (Button) findViewById(R.id.btn_back);
+		btn_black = (Button) findViewById(R.id.btn_back);
 		btn_add_friend = (Button) findViewById(R.id.btn_add_friend);
 		btn_add_friend.setEnabled(false);
 		btn_chat.setEnabled(false);
-		btn_back.setEnabled(false);
+		btn_black.setEnabled(false);
 		if (from.equals("me")) {
 			initTopBarForLeft("个人资料");
 			layout_head.setOnClickListener(this);
 			layout_nick.setOnClickListener(this);
 			layout_gender.setOnClickListener(this);
+			layout_useraddr.setOnClickListener(this);
+			layout_userbir.setOnClickListener(this);
+			layout_usersendaddr.setOnClickListener(this);
+			layout_usertelenum.setOnClickListener(this);
+			layout_usermail.setOnClickListener(this);
+			layout_changepsw.setOnClickListener(this);
+
 			iv_nickarraw.setVisibility(View.VISIBLE);
 			iv_arraw.setVisibility(View.VISIBLE);
-			btn_back.setVisibility(View.GONE);
+			btn_black.setVisibility(View.GONE);
 			btn_chat.setVisibility(View.GONE);
 			btn_add_friend.setVisibility(View.GONE);
 		} else {
 			initTopBarForLeft("详细资料");
 			iv_nickarraw.setVisibility(View.INVISIBLE);
 			iv_arraw.setVisibility(View.INVISIBLE);
-			if (from.equals("add")) {// 从附近的人列表添加好友--因为获取附近的人的方法里面有是否显示好友的情况，因此在这里需要判断下这个用户是否是自己的好友
+			if (from.equals("add")) {
+				// 从附近的人列表添加好友--因为获取附近的人的方法里面有是否显示好友的情况，因此在这里需要判断下这个用户是否是自己的好友
 				if (mApplication.getContactList().containsKey(username)) {// 是好友
 					btn_chat.setVisibility(View.VISIBLE);
-					btn_back.setVisibility(View.VISIBLE);
+					btn_black.setVisibility(View.VISIBLE);
 					btn_chat.setOnClickListener(this);
-					btn_back.setOnClickListener(this);
+					btn_black.setOnClickListener(this);
 				} else {
-					btn_back.setVisibility(View.GONE);
+					btn_black.setVisibility(View.GONE);
 					btn_chat.setVisibility(View.GONE);
 					btn_add_friend.setVisibility(View.VISIBLE);
 					btn_add_friend.setOnClickListener(this);
 				}
 			} else {// 查看他人
 				btn_chat.setVisibility(View.VISIBLE);
-				btn_back.setVisibility(View.VISIBLE);
+				btn_black.setVisibility(View.VISIBLE);
 				btn_chat.setOnClickListener(this);
-				btn_back.setOnClickListener(this);
+				btn_black.setOnClickListener(this);
 			}
 			initOtherData(username);
 		}
@@ -157,17 +187,15 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 
 			@Override
 			public void onError(int arg0, String arg1) {
-				// TODO Auto-generated method stub
 				ShowLog("onError onError:" + arg1);
 			}
 
 			@Override
 			public void onSuccess(List<User> arg0) {
-				// TODO Auto-generated method stub
 				if (arg0 != null && arg0.size() > 0) {
 					user = arg0.get(0);
 					btn_chat.setEnabled(true);
-					btn_back.setEnabled(true);
+					btn_black.setEnabled(true);
 					btn_add_friend.setEnabled(true);
 					updateUser(user);
 				} else {
@@ -182,14 +210,21 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		refreshAvatar(user.getAvatar());
 		tv_set_name.setText(user.getUsername());
 		tv_set_nick.setText(user.getNick());
+		tv_show_usertele.setText(user.getUserTele());
+
+		tv_set_useraddr.setText(user.getUserAddr());
+		tv_set_userbir.setText(user.getUserBir());
+		tv_set_usersendaddr.setText(user.getUserSendAddr());
+		tv_set_usermail.setText(user.getUserMail());
+
 		tv_set_gender.setText(user.getSex() == true ? "男" : "女");
 		// 检测是否为黑名单用户
 		if (from.equals("other")) {
 			if (BmobDB.create(this).isBlackUser(user.getUsername())) {
-				btn_back.setVisibility(View.GONE);
+				btn_black.setVisibility(View.GONE);
 				layout_black_tips.setVisibility(View.VISIBLE);
 			} else {
-				btn_back.setVisibility(View.VISIBLE);
+				btn_black.setVisibility(View.VISIBLE);
 				layout_black_tips.setVisibility(View.GONE);
 			}
 		}
@@ -221,7 +256,8 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
+		Intent updateIntent = new Intent(getApplicationContext(),
+				UpdateInfoActivity.class);
 		switch (v.getId()) {
 		case R.id.btn_chat:// 发起聊天
 			Intent intent = new Intent(this, ChatActivity.class);
@@ -233,11 +269,34 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			showAvatarPop();
 			break;
 		case R.id.layout_nick:
-			startAnimActivity(UpdateInfoActivity.class);
+			// startAnimActivity(UpdateInfoActivity.class);
+			updateIntent.putExtra("i", 0);
+			startActivity(updateIntent);
 			break;
 		case R.id.layout_gender:// 性别
 			showSexChooseDialog();
 			break;
+		case R.id.layout_useraddr:
+			updateIntent.putExtra("i", 1);
+			startActivity(updateIntent);
+			break;
+		case R.id.layout_userbir:
+			updateIntent.putExtra("i", 2);
+			startActivity(updateIntent);
+			break;
+		case R.id.layout_usersendaddr:
+			updateIntent.putExtra("i", 3);
+			startActivity(updateIntent);
+			break;
+		case R.id.layout_usermail:
+			updateIntent.putExtra("i", 4);
+			startActivity(updateIntent);
+			break;
+		case R.id.layout_changepsw:
+			updateIntent.putExtra("i", 5);
+			startActivity(updateIntent);
+			break;
+
 		case R.id.btn_back:// 黑名单
 			showBlackDialog(user.getUsername());
 			break;
@@ -245,58 +304,58 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			addFriend();
 			break;
 		}
-	}
-	String[] sexs = new String[]{ "男", "女" };
-	private void showSexChooseDialog() {
-		new AlertDialog.Builder(this)
-		.setTitle("单选框")
-		.setIcon(android.R.drawable.ic_dialog_info)
-		.setSingleChoiceItems(sexs, 0,
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,
-							int which) {
-						BmobLog.i("点击的是"+sexs[which]);
-						updateInfo(which);
-						dialog.dismiss();
-					}
-				})
-		.setNegativeButton("取消", null)
-		.show();
+		overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 	}
 
-	
-	/** 修改资料
-	  * updateInfo
-	  * @Title: updateInfo
-	  * @return void
-	  * @throws
-	  */
+	String[] sexs = new String[] { "男  ", "女  " };
+
+	private void showSexChooseDialog() {
+		new AlertDialog.Builder(this)
+				.setTitle("单选框")
+				.setIcon(android.R.drawable.ic_dialog_info)
+				.setSingleChoiceItems(sexs, 0,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+								BmobLog.i("点击的是" + sexs[which]);
+								updateInfo(which);
+								dialog.dismiss();
+							}
+						}).setNegativeButton("取消", null).show();
+	}
+
+	/**
+	 * 修改资料 updateInfo
+	 * 
+	 * @Title: updateInfo
+	 * @return void
+	 * @throws
+	 */
 	private void updateInfo(int which) {
 		final User user = userManager.getCurrentUser(User.class);
-		BmobLog.i("updateInfo 性别："+user.getSex());
-		if(which==0){
+		BmobLog.i("updateInfo 性别：" + user.getSex());
+		if (which == 0) {
 			user.setSex(true);
-		}else{
+		} else {
 			user.setSex(false);
 		}
 		user.update(this, new UpdateListener() {
 
 			@Override
 			public void onSuccess() {
-				// TODO Auto-generated method stub
 				ShowToast("修改成功");
 				final User u = userManager.getCurrentUser(User.class);
-				BmobLog.i("修改成功后的sex = "+u.getSex());
-				tv_set_gender.setText(user.getSex() == true ? "男" : "女");
+				BmobLog.i("修改成功后的sex = " + u.getSex());
+				tv_set_gender.setText(user.getSex() == true ? "男  " : "女  ");
 			}
 
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				// TODO Auto-generated method stub
 				ShowToast("onFailure:" + arg1);
 			}
 		});
 	}
+
 	/**
 	 * 添加好友请求
 	 * 
@@ -353,7 +412,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 					public void onSuccess() {
 						// TODO Auto-generated method stub
 						ShowToast("黑名单添加成功!");
-						btn_back.setVisibility(View.GONE);
+						btn_black.setVisibility(View.GONE);
 						layout_black_tips.setVisibility(View.VISIBLE);
 						// 重新设置下内存中保存的好友列表
 						CustomApplcation.getInstance().setContactList(
@@ -416,7 +475,6 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
 				ShowLog("点击相册");
 				layout_photo.setBackgroundColor(getResources().getColor(
 						R.color.base_color_text_white));

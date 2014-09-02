@@ -28,6 +28,7 @@ import com.bmob.im.demo.ui.MessageInfoActivity;
 import com.bmob.im.demo.ui.MyInviteInfoActivity;
 import com.bmob.im.demo.ui.MyshareInfoActivity;
 import com.bmob.im.demo.ui.OrderInfoActivity;
+import com.bmob.im.demo.ui.SetMyInfoActivity;
 import com.bmob.im.demo.ui.SettingInfoActivity;
 import com.bmob.im.demo.ui.UserInfoActivity;
 
@@ -131,7 +132,8 @@ public class LeftMenuBottomFragment extends Fragment {
 			switch (v.getId()) {
 			case R.id.layout_left_menu_topbar:
 				Intent goUserInfoIntent = new Intent(getActivity(),
-						UserInfoActivity.class);
+						SetMyInfoActivity.class);
+				goUserInfoIntent.putExtra("from", "me");
 				startActivity(goUserInfoIntent);
 				break;
 

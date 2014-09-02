@@ -21,18 +21,16 @@ public class SettingInfoActivity extends LeftMenuInfoActivityBase implements
 		OnClickListener {
 
 	private ImageView btnBack;
-	private RelativeLayout userInfoLayout;
+	private Button btn_logout;
+	private TextView tv_set_name;
+	private RelativeLayout rl_switch_notification, rl_switch_voice,
+			rl_switch_vibrate, userInfoLayout, layout_blacklist;
 
-	Button btn_logout;
-	TextView tv_set_name;
-	RelativeLayout rl_switch_notification, rl_switch_voice, rl_switch_vibrate,
-			layout_blacklist;
+	private ImageView iv_open_notification, iv_close_notification,
+			iv_open_voice, iv_close_voice, iv_open_vibrate, iv_close_vibrate;
 
-	ImageView iv_open_notification, iv_close_notification, iv_open_voice,
-			iv_close_voice, iv_open_vibrate, iv_close_vibrate;
-
-	View view1, view2;
-	SharePreferenceUtil mSharedUtil;
+	private View view1, view2;
+	private SharePreferenceUtil mSharedUtil;
 	public CustomApplcation mApplication;
 
 	@Override
@@ -42,7 +40,6 @@ public class SettingInfoActivity extends LeftMenuInfoActivityBase implements
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_setting_info);
-		
 
 		mApplication = CustomApplcation.getInstance();
 		mSharedUtil = mApplication.getSpUtil();
@@ -58,7 +55,6 @@ public class SettingInfoActivity extends LeftMenuInfoActivityBase implements
 	private void initView() {
 		btnBack = (ImageView) findViewById(R.id.btn_top_back);
 		userInfoLayout = (RelativeLayout) findViewById(R.id.layout_info);
-		
 		// 黑名单列表
 		layout_blacklist = (RelativeLayout) findViewById(R.id.layout_blacklist);
 
@@ -81,7 +77,7 @@ public class SettingInfoActivity extends LeftMenuInfoActivityBase implements
 		tv_set_name = (TextView) findViewById(R.id.tv_set_name);
 		btn_logout = (Button) findViewById(R.id.btn_logout);
 
-//		 初始化
+		// 初始化
 		boolean isAllowNotify = mSharedUtil.isAllowPushNotify();
 
 		if (isAllowNotify) {
@@ -121,10 +117,9 @@ public class SettingInfoActivity extends LeftMenuInfoActivityBase implements
 
 	@Override
 	public void onClick(View v) {
-		Intent mIntent = null;
 		switch (v.getId()) {
 		case R.id.layout_info:
-			mIntent = new Intent(getApplicationContext(),
+			Intent mIntent = new Intent(getApplicationContext(),
 					SetMyInfoActivity.class);
 			mIntent.putExtra("from", "me");
 			startActivity(mIntent);
