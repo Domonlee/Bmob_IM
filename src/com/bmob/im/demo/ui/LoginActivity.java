@@ -1,5 +1,8 @@
 package com.bmob.im.demo.ui;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -33,7 +36,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	EditText et_username, et_password;
 	Button btn_login;
-	TextView btn_register,btn_forgot;
+	TextView btn_register, btn_forgot;
 	BmobChatUser currentUser;
 
 	private MyBroadcastReceiver receiver = new MyBroadcastReceiver();
@@ -44,11 +47,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		init();
-		//注册退出广播
+		// 注册退出广播
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(BmobConstants.ACTION_REGISTER_SUCCESS_FINISH);
 		registerReceiver(receiver, filter);
-		
+
 	}
 
 	private void init() {
@@ -56,23 +59,25 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		et_password = (EditText) findViewById(R.id.et_password);
 		btn_login = (Button) findViewById(R.id.btn_login);
 		btn_register = (TextView) findViewById(R.id.btn_register);
-		btn_forgot = (TextView)findViewById(R.id.btn_forgotpsw);
+		btn_forgot = (TextView) findViewById(R.id.btn_forgotpsw);
 		btn_login.setOnClickListener(this);
 		btn_register.setOnClickListener(this);
-		
+
 	}
 
 	public class MyBroadcastReceiver extends BroadcastReceiver {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			if (intent != null && BmobConstants.ACTION_REGISTER_SUCCESS_FINISH.equals(intent.getAction())) {
+			if (intent != null
+					&& BmobConstants.ACTION_REGISTER_SUCCESS_FINISH
+							.equals(intent.getAction())) {
 				finish();
 			}
 		}
 
 	}
-	
+
 	@Override
 	public void onClick(View v) {
 		if (v == btn_register) {
@@ -81,15 +86,15 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			startActivity(intent);
 		} else {
 			boolean isNetConnected = CommonUtils.isNetworkAvailable(this);
-			if(!isNetConnected){
+			if (!isNetConnected) {
 				ShowToast(R.string.network_tips);
 				return;
 			}
 			login();
 		}
 	}
-	
-	private void login(){
+
+	private void login() {
 		String name = et_username.getText().toString();
 		String password = et_password.getText().toString();
 
@@ -103,8 +108,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			return;
 		}
 
-		final ProgressDialog progress = new ProgressDialog(
-				LoginActivity.this);
+		final ProgressDialog progress = new ProgressDialog(LoginActivity.this);
 		progress.setMessage("正在登陆...");
 		progress.setCanceledOnTouchOutside(false);
 		progress.show();
@@ -121,11 +125,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 						progress.setMessage("正在获取好友列表...");
 					}
 				});
-				//更新用户的地理位置以及好友的资料
+				// 更新用户的地理位置以及好友的资料
 				updateUserInfos();
 				progress.dismiss();
-				
-				Intent intent = new Intent(LoginActivity.this,MainInActivity.class);
+
+				Intent intent = new Intent(LoginActivity.this,
+						MainInActivity.class);
 				startActivity(intent);
 				finish();
 			}
@@ -138,14 +143,35 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				ShowToast(arg0);
 			}
 		});
-		
+
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		unregisterReceiver(receiver);
 	}
-	
+
+	/**
+	 * @说明 String 待检验字符串 Int 检验动作 1:邮箱 2:手机
+	 * @return boolean
+	 */
+
+	public boolean emailFormat(String str, int action) {
+		boolean tag = true;
+		final String pattern1 = "^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\\.([a-zA-Z0-9_-])+)+$";
+		final String pattern2 = "^[1][3,4,5,8][0-9]{9}$";
+		Pattern pattern;
+		if (action == 1)
+			pattern = Pattern.compile(pattern1);
+		else
+			pattern = Pattern.compile(pattern2);
+		Matcher mat = pattern.matcher(str);
+		if (!mat.matches()) {
+			tag = false;
+		}
+		return tag;
+	}
+
 }
