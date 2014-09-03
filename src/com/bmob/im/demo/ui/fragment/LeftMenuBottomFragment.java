@@ -30,7 +30,6 @@ import com.bmob.im.demo.ui.MyshareInfoActivity;
 import com.bmob.im.demo.ui.OrderInfoActivity;
 import com.bmob.im.demo.ui.SetMyInfoActivity;
 import com.bmob.im.demo.ui.SettingInfoActivity;
-import com.bmob.im.demo.ui.UserInfoActivity;
 
 public class LeftMenuBottomFragment extends Fragment {
 

@@ -72,7 +72,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	ImageView iv_set_avator, iv_arraw, iv_nickarraw;
 	LinearLayout layout_all;
 
-	Button btn_chat, btn_black, btn_add_friend;
+	Button btn_chat, btn_black, btn_add_friend,btn_exit;
 	RelativeLayout layout_head, layout_nick, layout_gender, layout_black_tips,
 			layout_useraddr, layout_userbir, layout_usersendaddr,
 			layout_usertelenum, layout_usermail, layout_changepsw;
@@ -130,6 +130,9 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 		btn_chat = (Button) findViewById(R.id.btn_chat);
 		btn_black = (Button) findViewById(R.id.btn_back);
 		btn_add_friend = (Button) findViewById(R.id.btn_add_friend);
+		btn_exit = (Button)findViewById(R.id.btn_userinfo_exit);
+
+		btn_exit.setVisibility(View.GONE);
 		btn_add_friend.setEnabled(false);
 		btn_chat.setEnabled(false);
 		btn_black.setEnabled(false);
@@ -157,11 +160,20 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			if (from.equals("add")) {
 				// 从附近的人列表添加好友--因为获取附近的人的方法里面有是否显示好友的情况，因此在这里需要判断下这个用户是否是自己的好友
 				if (mApplication.getContactList().containsKey(username)) {// 是好友
+
+					
 					btn_chat.setVisibility(View.VISIBLE);
 					btn_black.setVisibility(View.VISIBLE);
 					btn_chat.setOnClickListener(this);
 					btn_black.setOnClickListener(this);
 				} else {
+					layout_useraddr.setVisibility(View.GONE);
+					layout_userbir.setVisibility(View.GONE);
+					layout_usersendaddr.setVisibility(View.GONE);
+					layout_usermail.setVisibility(View.GONE);
+					layout_usertelenum.setVisibility(View.GONE);
+					layout_changepsw.setVisibility(View.GONE);
+					
 					btn_black.setVisibility(View.GONE);
 					btn_chat.setVisibility(View.GONE);
 					btn_add_friend.setVisibility(View.VISIBLE);
@@ -170,6 +182,16 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			} else {// 查看他人
 				btn_chat.setVisibility(View.VISIBLE);
 				btn_black.setVisibility(View.VISIBLE);
+				
+				layout_useraddr.setVisibility(View.GONE);
+				layout_userbir.setVisibility(View.GONE);
+				layout_usersendaddr.setVisibility(View.GONE);
+				layout_usermail.setVisibility(View.GONE);
+				layout_usertelenum.setVisibility(View.GONE);
+				layout_changepsw.setVisibility(View.GONE);
+				
+
+
 				btn_chat.setOnClickListener(this);
 				btn_black.setOnClickListener(this);
 			}

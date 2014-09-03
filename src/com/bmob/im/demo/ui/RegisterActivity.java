@@ -121,7 +121,7 @@ public class RegisterActivity extends BaseActivity {
 						BmobConstants.ACTION_REGISTER_SUCCESS_FINISH));
 				// Æô¶¯Ö÷Ò³
 				Intent intent = new Intent(RegisterActivity.this,
-						MainActivity.class);
+						MainInActivity.class);
 				startActivity(intent);
 				finish();
 

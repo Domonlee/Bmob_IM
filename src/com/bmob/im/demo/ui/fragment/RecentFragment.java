@@ -48,7 +48,8 @@ public class RecentFragment extends FragmentBase implements OnItemClickListener,
 	}
 	
 	private void initView(){
-		initTopBarForOnlyTitle("会话");
+//		initTopBarForOnlyTitle("聊天");
+		initTopBarForLeft("聊天");
 		listview = (ListView)findViewById(R.id.list);
 		listview.setOnItemClickListener(this);
 		listview.setOnItemLongClickListener(this);

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import cn.bmob.im.BmobChatManager;
@@ -43,6 +45,9 @@ public class MainActivity extends ActivityBase implements EventListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		initView();
 		initTab();
@@ -52,7 +57,7 @@ public class MainActivity extends ActivityBase implements EventListener {
 		mTabs = new Button[3];
 		mTabs[0] = (Button) findViewById(R.id.btn_message);
 		mTabs[1] = (Button) findViewById(R.id.btn_contract);
-		mTabs[2] = (Button) findViewById(R.id.btn_set);
+		// mTabs[2] = (Button) findViewById(R.id.btn_set);
 		iv_recent_tips = (ImageView) findViewById(R.id.iv_recent_tips);
 		iv_contact_tips = (ImageView) findViewById(R.id.iv_contact_tips);
 		// 把第一个tab设为选中状态
@@ -85,9 +90,9 @@ public class MainActivity extends ActivityBase implements EventListener {
 		case R.id.btn_contract:
 			index = 1;
 			break;
-		case R.id.btn_set:
-			index = 2;
-			break;
+		// case R.id.btn_set:
+		// index = 2;
+		// break;
 		}
 		if (currentTabIndex != index) {
 			FragmentTransaction trx = getSupportFragmentManager()
