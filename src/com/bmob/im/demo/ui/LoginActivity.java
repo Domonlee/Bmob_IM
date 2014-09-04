@@ -43,7 +43,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		init();
@@ -116,12 +115,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void onSuccess() {
-				// TODO Auto-generated method stub
 				runOnUiThread(new Runnable() {
 
 					@Override
 					public void run() {
-						// TODO Auto-generated method stub
 						progress.setMessage("正在获取好友列表...");
 					}
 				});
@@ -137,7 +134,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void onFailure(int errorcode, String arg0) {
-				// TODO Auto-generated method stub
 				progress.dismiss();
 				BmobLog.i(arg0);
 				ShowToast(arg0);
@@ -148,30 +144,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
 		super.onDestroy();
 		unregisterReceiver(receiver);
 	}
 
-	/**
-	 * @说明 String 待检验字符串 Int 检验动作 1:邮箱 2:手机
-	 * @return boolean
-	 */
-
-	public boolean emailFormat(String str, int action) {
-		boolean tag = true;
-		final String pattern1 = "^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\\.([a-zA-Z0-9_-])+)+$";
-		final String pattern2 = "^[1][3,4,5,8][0-9]{9}$";
-		Pattern pattern;
-		if (action == 1)
-			pattern = Pattern.compile(pattern1);
-		else
-			pattern = Pattern.compile(pattern2);
-		Matcher mat = pattern.matcher(str);
-		if (!mat.matches()) {
-			tag = false;
-		}
-		return tag;
-	}
+	
 
 }

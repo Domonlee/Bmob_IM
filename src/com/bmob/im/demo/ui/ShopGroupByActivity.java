@@ -99,10 +99,10 @@ public class ShopGroupByActivity extends FragmentBase {
 	/**
 	 * 选择Top Bar上面的按钮
 	 * 
-	 * @param x
-	 *            选中的菜单
+	 * @param x  选中的菜单
 	 * @param y
 	 * @param z
+	 * @author Domon
 	 */
 	public void setSelected(int x, int y, int z) {
 		tTabs[x].setSelected(true);
@@ -111,7 +111,7 @@ public class ShopGroupByActivity extends FragmentBase {
 	}
 
 	/**
-	 * 
+	 * @author Domon 
 	 */
 	public void selectFargment(int t,int c) {
 		if (currenttTabIndex != tindex) {

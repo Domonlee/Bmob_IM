@@ -14,12 +14,17 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+import cn.bmob.im.BmobUserManager;
+import cn.bmob.v3.listener.UpdateListener;
 
 import com.bmob.im.demo.R;
 import com.bmob.im.demo.adapter.CommonAdapter;
 import com.bmob.im.demo.adapter.SettingAdapter;
+import com.bmob.im.demo.bean.User;
 import com.bmob.im.demo.model.ItemCommon;
 import com.bmob.im.demo.model.ItemSetting;
 import com.bmob.im.demo.ui.ExchangeInfoActivity;
@@ -30,13 +35,19 @@ import com.bmob.im.demo.ui.MyshareInfoActivity;
 import com.bmob.im.demo.ui.OrderInfoActivity;
 import com.bmob.im.demo.ui.SetMyInfoActivity;
 import com.bmob.im.demo.ui.SettingInfoActivity;
+import com.bmob.im.demo.util.ImageLoadOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
+/**
+ * @author Domon
+ * 
+ */
 public class LeftMenuBottomFragment extends Fragment {
 
 	private View mView;
 	private ListView lv_Common, lv_Setting;
 	private Context mContext;
-
+	private ImageView iv_set_avatar;
 	private RelativeLayout topbarLayout;
 
 	private List<ItemCommon> commonModels;
@@ -48,9 +59,13 @@ public class LeftMenuBottomFragment extends Fragment {
 		if (null == mView) {
 			mView = inflater.inflate(R.layout.left_menu_fragment, container,
 					false);
+			BmobUserManager userManager = new BmobUserManager();
+			userManager = BmobUserManager.getInstance(mContext);
+			User user = (User) userManager.getCurrentUser(User.class);
 			initView();
 			initValiData();
 			bindData();
+			refreshAvatar(user.getAvatar());
 
 			lv_Common.setOnItemClickListener(new OnItemClickListener() {
 
@@ -118,7 +133,9 @@ public class LeftMenuBottomFragment extends Fragment {
 	private void initView() {
 		lv_Common = (ListView) mView.findViewById(R.id.left_listview_common);
 		lv_Setting = (ListView) mView.findViewById(R.id.left_listview_setting);
+		iv_set_avatar = (ImageView) mView.findViewById(R.id.iv_left_menu_head);
 
+		// userManager = BmobUserManager.getInstance(mContext);
 		topbarLayout = (RelativeLayout) mView
 				.findViewById(R.id.layout_left_menu_topbar);
 		topbarLayout.setOnClickListener(new ButtonListener());
@@ -135,7 +152,6 @@ public class LeftMenuBottomFragment extends Fragment {
 				goUserInfoIntent.putExtra("from", "me");
 				startActivity(goUserInfoIntent);
 				break;
-
 			}
 		}
 	}
@@ -173,10 +189,28 @@ public class LeftMenuBottomFragment extends Fragment {
 		}
 	}
 
-	// bind data in listview
+	/**
+	 * Title: bindData Description: bind data in listview
+	 * 
+	 * @author Domon
+	 */
 	private void bindData() {
 		lv_Common.setAdapter(new CommonAdapter(mContext, commonModels));
 		lv_Setting.setAdapter(new SettingAdapter(mContext, settingsModels));
 	}
 
+	/**
+	 * ¸üÐÂÍ·Ïñ refreshAvatar
+	 * 
+	 * @return void
+	 * @throws
+	 */
+	private void refreshAvatar(String avatar) {
+		if (avatar != null && !avatar.equals("")) {
+			ImageLoader.getInstance().displayImage(avatar, iv_set_avatar,
+					ImageLoadOptions.getOptions());
+		} else {
+			iv_set_avatar.setImageResource(R.drawable.default_head);
+		}
+	}
 }

@@ -60,7 +60,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * 
  * @ClassName: SetMyInfoActivity
  * @Description: TODO
- * @author smile
+ * @author Domon
  * @date 2014-6-10 обнГ2:55:19
  */
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)

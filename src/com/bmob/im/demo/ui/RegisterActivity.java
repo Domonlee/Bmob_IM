@@ -1,7 +1,11 @@
 package com.bmob.im.demo.ui;
+
 /**
  * 未完成 手机号字段，手机号检测
  */
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,12 +29,12 @@ import com.bmob.im.demo.util.CommonUtils;
 public class RegisterActivity extends BaseActivity {
 
 	Button btn_register, btn_sendkey;
-	EditText et_username, et_password, et_email, et_inputkey, et_invitecode,et_telenum;
+	EditText et_username, et_password, et_pswagain, et_inputkey, et_invitecode,
+			et_telenum;
 	BmobChatUser currentUser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
 
@@ -38,9 +42,10 @@ public class RegisterActivity extends BaseActivity {
 
 		et_username = (EditText) findViewById(R.id.et_username);
 		et_password = (EditText) findViewById(R.id.et_password);
-		et_email = (EditText) findViewById(R.id.et_email);
+		et_pswagain = (EditText) findViewById(R.id.et_pswagain);
 		et_inputkey = (EditText) findViewById(R.id.et_inputkey);
 		et_invitecode = (EditText) findViewById(R.id.et_invitecode);
+		et_telenum = (EditText) findViewById(R.id.et_telenum);
 
 		btn_register = (Button) findViewById(R.id.btn_register);
 		btn_sendkey = (Button) findViewById(R.id.btn_sendkey);
@@ -49,28 +54,40 @@ public class RegisterActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
 				register();
 			}
 		});
 
-		//send the tele code
+		// send the tele code
 		btn_sendkey.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				Toast.makeText(getApplicationContext(), "sending...",
 						Toast.LENGTH_LONG).show();
-
 			}
 		});
 	}
 
 	private void register() {
-		String name = et_username.getText().toString();
-		String password = et_password.getText().toString();
-		String pwd_again = et_email.getText().toString();
 
+		String name = et_username.getText().toString();
+		String telenum = et_telenum.getText().toString();
+		String password = et_password.getText().toString();
+		String psw_again = et_pswagain.getText().toString();
+
+		Boolean isTeteNum = verifyString(telenum, 2);
+		Boolean isPsw = verifyString(password, 3);
+		if (!isTeteNum) {
+			Toast.makeText(getApplicationContext(), "您输入的手机号码有误，请重新填写",
+					Toast.LENGTH_LONG).show();
+			return;
+		}
+
+		if (!isPsw) {
+			Toast.makeText(getApplicationContext(), "您输入的密码格式有误，请重新填写",
+					Toast.LENGTH_LONG).show();
+			return;
+		}
 		if (TextUtils.isEmpty(name)) {
 			ShowToast(R.string.toast_error_username_null);
 			return;
@@ -80,7 +97,11 @@ public class RegisterActivity extends BaseActivity {
 			ShowToast(R.string.toast_error_password_null);
 			return;
 		}
-		if (!pwd_again.equals(password)) {
+		if (TextUtils.isEmpty(telenum)) {
+			ShowToast(R.string.toast_error_password_null);
+			return;
+		}
+		if (!psw_again.equals(password)) {
 			ShowToast(R.string.toast_error_comfirm_password);
 			return;
 		}
@@ -101,6 +122,7 @@ public class RegisterActivity extends BaseActivity {
 		final User bu = new User();
 		bu.setUsername(name);
 		bu.setPassword(password);
+		bu.setUserTele(telenum);
 		// 将user和设备id进行绑定
 		bu.setDeviceType("android");
 		bu.setInstallId(BmobInstallation.getInstallationId(this));
@@ -108,7 +130,6 @@ public class RegisterActivity extends BaseActivity {
 
 			@Override
 			public void onSuccess() {
-				// TODO Auto-generated method stub
 				progress.dismiss();
 				ShowToast("注册成功");
 				// 将设备与username进行绑定
@@ -129,12 +150,39 @@ public class RegisterActivity extends BaseActivity {
 
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				// TODO Auto-generated method stub
 				BmobLog.i(arg1);
 				ShowToast("注册失败:" + arg1);
 				progress.dismiss();
 			}
 		});
+
 	}
 
+	/**
+	 * @说明 String 待检验字符串 Int 检验动作 1:邮箱 2:手机 3:密码
+	 * @return boolean
+	 */
+	public boolean verifyString(String str, int action) {
+		boolean tag = true;
+		final String pattern1 = "^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\\.([a-zA-Z0-9_-])+)+$";
+		final String pattern2 = "^[1][3,7,5,8][0-9]{9}$";
+		final String pattern3 = "^^[a-zA-Z0-9_.]{6,18}$";
+		Pattern pattern = null;
+		switch (action) {
+		case 1:
+			pattern = Pattern.compile(pattern1);
+			break;
+		case 2:
+			pattern = Pattern.compile(pattern2);
+			break;
+		case 3:
+			pattern = Pattern.compile(pattern3);
+			break;
+		}
+		Matcher mat = pattern.matcher(str);
+		if (!mat.matches()) {
+			tag = false;
+		}
+		return tag;
+	}
 }

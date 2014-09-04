@@ -57,17 +57,16 @@ public class ExchangeInfoActivity extends LeftMenuInfoActivityBase {
 		exchangeModel = new ArrayList<ItemExchange>();
 		List<HashMap<String, Object>> ListData = getListData();
 		SimpleAdapter simpleAdapter = new SimpleAdapter(mContext, ListData,
-				R.layout.listview_exchange_item, new String[] { "prodname",
-						"pinpai" }, new int[] {
-						R.id.tv_exchange_item_goodsname,
-						R.id.tv_exchange_item_info });
-
+				R.layout.listview_exchange_item, new String[] { "result" },
+				new int[] { R.id.tv_exchange_item_goodsname });
 		goodsListView.setAdapter(simpleAdapter);
 	}
 
 	private List<HashMap<String, Object>> getListData() {
 		List<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
-		String urlString = "http://www.ranlixu.com/api.asp?action=search&MidCode=703";
+		// String urlString =
+		// "http://www.ranlixu.com/api.asp?action=search&MidCode=703";
+		String urlString = "http://apis.juhe.cn/ip/ip2addr?ip=www.juhe.cn&key=d5a0d651a9d6350a8d6a55e2fe404493";
 		MyHttp myHttp = new MyHttp();
 		String retString = myHttp.httpGet(urlString);
 		try {
@@ -76,26 +75,23 @@ public class ExchangeInfoActivity extends LeftMenuInfoActivityBase {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
 				{
 					HashMap<String, Object> hashMap = new HashMap<String, Object>();
-					// arrayList.`("prodname",
 					// jsonObject.getString("ProdName"));
-					hashMap.put("prodname", jsonObject.getString("ProdName"));
-					hashMap.put("pinpai", jsonObject.getString("pinpai"));
+					// hashMap.put("prodname",
+					// jsonObject.getString("ProdName"));
+					// hashMap.put("pinpai", jsonObject.getString("pinpai"));
+					hashMap.put("result", jsonObject.getString("result"));
 					dataList.add(hashMap);
 				}
-
 			}
-
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-
 		return dataList;
 	}
 
 	private void initView() {
 		btnBack = (ImageView) findViewById(R.id.btn_top_back);
 		goodsListView = (ListView) findViewById(R.id.listview_exchange);
-
 	}
 
 	/**
@@ -110,19 +106,15 @@ public class ExchangeInfoActivity extends LeftMenuInfoActivityBase {
 			HttpResponse httpResponse;
 			try {
 				httpResponse = httpClient.execute(httpGet);
-				int statuscode = httpResponse.getStatusLine().getStatusCode();
-				if (statuscode == HttpStatus.SC_OK) {
+				if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 					response = EntityUtils.toString(httpResponse.getEntity());
 				}
-
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
 			return response;
 		}
 	}
-
 }

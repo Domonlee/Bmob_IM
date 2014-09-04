@@ -109,7 +109,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/et_email"
+                android:id="@+id/et_pswagain"
                 style="@style/Register_Edit"
                 android:hint="@string/register_pswrepeat"
                 android:inputType="textPassword" />

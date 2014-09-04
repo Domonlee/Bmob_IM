@@ -3,6 +3,7 @@ package com.bmob.im.demo.ui;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import cn.bmob.v3.listener.UpdateListener;
 
 import com.bmob.im.demo.R;
@@ -26,6 +27,8 @@ public class UpdateInfoActivity extends ActivityBase {
 	private String[] nameStr = new String[] { "昵称", "常住地", "生日", "收货地址",
 			"电子邮箱", "密码" };
 	int i = 0;
+	
+	RegisterActivity registerActivity = new RegisterActivity();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,9 +83,19 @@ public class UpdateInfoActivity extends ActivityBase {
 			user.setUserSendAddr(inputStr);
 			break;
 		case 4:
+			if (!registerActivity.verifyString(inputStr, 1)) {
+				Toast.makeText(getApplicationContext(), "您输入的邮箱格式有误，请重新填写",
+						Toast.LENGTH_LONG).show();
+				return;
+			}
 			user.setUserMail(inputStr);
 			break;
 		case 5:
+			if (!registerActivity.verifyString(inputStr, 3)) {
+				Toast.makeText(getApplicationContext(), "您输入的密码格式有误，请重新填写",
+						Toast.LENGTH_LONG).show();
+				return;
+			}
 			user.setPassword(inputStr);
 			break;
 		}
