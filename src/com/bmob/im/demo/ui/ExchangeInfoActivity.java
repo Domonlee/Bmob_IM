@@ -16,11 +16,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
@@ -30,11 +34,23 @@ import com.bmob.im.demo.model.ItemExchange;
 
 public class ExchangeInfoActivity extends LeftMenuInfoActivityBase {
 
+	private ProgressDialog pDialog;
+
+	// URL to get contacts JSON
+	private static String url = "http://api.androidhive.info/contacts/";
+
+	// JSON Node names
+	private static final String TAG_CONTACTS = "contacts";
+	private static final String TAG_ID = "id";
+	private static final String TAG_NAME = "name";
+
 	private ImageView btnBack;
 	private ListView goodsListView;
 
-	private Context mContext;
-	private List<ItemExchange> exchangeModel;
+	private Context mContext ;
+
+	JSONArray contacts = null;
+	ArrayList<HashMap<String, String>> contactList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,39 +70,13 @@ public class ExchangeInfoActivity extends LeftMenuInfoActivityBase {
 
 	private void initValiData() {
 		mContext = getApplicationContext();
-		exchangeModel = new ArrayList<ItemExchange>();
-		List<HashMap<String, Object>> ListData = getListData();
-		SimpleAdapter simpleAdapter = new SimpleAdapter(mContext, ListData,
-				R.layout.listview_exchange_item, new String[] { "result" },
-				new int[] { R.id.tv_exchange_item_goodsname });
-		goodsListView.setAdapter(simpleAdapter);
-	}
+//		mContext = getParent();
+		goodsListView = (ListView) findViewById(R.id.listview_exchange);
 
-	private List<HashMap<String, Object>> getListData() {
-		List<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
-		// String urlString =
-		// "http://www.ranlixu.com/api.asp?action=search&MidCode=703";
-		String urlString = "http://apis.juhe.cn/ip/ip2addr?ip=www.juhe.cn&key=d5a0d651a9d6350a8d6a55e2fe404493";
-		MyHttp myHttp = new MyHttp();
-		String retString = myHttp.httpGet(urlString);
-		try {
-			JSONArray jsonArray = new JSONArray(retString);
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject jsonObject = jsonArray.getJSONObject(i);
-				{
-					HashMap<String, Object> hashMap = new HashMap<String, Object>();
-					// jsonObject.getString("ProdName"));
-					// hashMap.put("prodname",
-					// jsonObject.getString("ProdName"));
-					// hashMap.put("pinpai", jsonObject.getString("pinpai"));
-					hashMap.put("result", jsonObject.getString("result"));
-					dataList.add(hashMap);
-				}
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return dataList;
+		contactList = new ArrayList<HashMap<String, String>>();
+
+		new GetContacts().execute();
+
 	}
 
 	private void initView() {
@@ -115,6 +105,62 @@ public class ExchangeInfoActivity extends LeftMenuInfoActivityBase {
 				e.printStackTrace();
 			}
 			return response;
+		}
+	}
+
+	private class GetContacts extends AsyncTask<Void, Void, Void> {
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+//			pDialog = new ProgressDialog();
+//			pDialog.setMessage("please wait...");
+//			pDialog.setCancelable(false);
+//			pDialog.show();
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			MyHttp myHttp = new MyHttp();
+			String jsonString = myHttp.httpGet(url);
+			if (jsonString != null) {
+				try {
+					JSONObject jsonObject = new JSONObject(jsonString);
+					contacts = jsonObject.getJSONArray(TAG_CONTACTS);
+
+					for (int i = 0; i < contacts.length(); i++) {
+						JSONObject c = contacts.getJSONObject(i);
+
+						String id = c.getString(TAG_ID);
+						String name = c.getString(TAG_NAME);
+
+						HashMap<String, String> contactHashMap = new HashMap<String, String>();
+
+						contactHashMap.put(TAG_ID, id);
+						contactHashMap.put(TAG_NAME, name);
+						contactList.add(contactHashMap);
+					}
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			} else {
+				Log.e("ServiceHandler", "Couldn't get any data from the url");
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			if (pDialog.isShowing()) {
+				pDialog.dismiss();
+			}
+			ListAdapter adapter = new SimpleAdapter(mContext, contactList,
+					R.layout.listview_exchange_item, new String[] { TAG_ID,
+							TAG_NAME }, new int[] { R.id.tv_exchange_item_info,
+							R.id.tv_exchange_item_goodsname });
+			goodsListView.setAdapter(adapter);
 		}
 	}
 }
