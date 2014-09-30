@@ -1,53 +1,52 @@
 package com.bmob.im.demo.ui;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bmob.im.demo.R;
-import com.bmob.im.demo.model.ItemExchange;
+import com.bmob.im.demo.util.MyHttp;
 
 public class ExchangeInfoActivity extends LeftMenuInfoActivityBase {
+	// public class ExchangeInfoActivity extends Activity {
 
 	private ProgressDialog pDialog;
 
-	// URL to get contacts JSON
 	private static String url = "http://api.androidhive.info/contacts/";
 
 	// JSON Node names
 	private static final String TAG_CONTACTS = "contacts";
 	private static final String TAG_ID = "id";
 	private static final String TAG_NAME = "name";
+	private static final String TAG_EMAIL = "email";
 
 	private ImageView btnBack;
 	private ListView goodsListView;
 
-	private Context mContext ;
+	private Context mContext;
 
 	JSONArray contacts = null;
 	ArrayList<HashMap<String, String>> contactList;
@@ -70,42 +69,39 @@ public class ExchangeInfoActivity extends LeftMenuInfoActivityBase {
 
 	private void initValiData() {
 		mContext = getApplicationContext();
-//		mContext = getParent();
-		goodsListView = (ListView) findViewById(R.id.listview_exchange);
-
 		contactList = new ArrayList<HashMap<String, String>>();
+		goodsListView.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				String name = ((TextView) view
+						.findViewById(R.id.tv_exchange_item_goodsname))
+						.getText().toString();
+				String idinfo = ((TextView) view
+						.findViewById(R.id.tv_exchange_item_info)).getText()
+						.toString();
+				String price = ((TextView) view
+						.findViewById(R.id.tv_exchange_item_price)).getText()
+						.toString();
+
+				Toast.makeText(getApplicationContext(), "111", 1000).show();
+				Intent getInfoDetailIntent = new Intent(
+						ExchangeInfoActivity.this,
+						SingleExchangeInfoActivity.class);
+				getInfoDetailIntent.putExtra(TAG_NAME, name);
+				getInfoDetailIntent.putExtra(TAG_ID, idinfo);
+				getInfoDetailIntent.putExtra(TAG_EMAIL, price);
+				startActivity(getInfoDetailIntent);
+			}
+		});
 		new GetContacts().execute();
-
 	}
 
 	private void initView() {
 		btnBack = (ImageView) findViewById(R.id.btn_top_back);
 		goodsListView = (ListView) findViewById(R.id.listview_exchange);
-	}
 
-	/**
-	 * @author Domon
-	 * 
-	 */
-	public class MyHttp {
-		public String httpGet(String url) {
-			String response = null;
-			HttpClient httpClient = new DefaultHttpClient();
-			HttpGet httpGet = new HttpGet(url);
-			HttpResponse httpResponse;
-			try {
-				httpResponse = httpClient.execute(httpGet);
-				if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-					response = EntityUtils.toString(httpResponse.getEntity());
-				}
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return response;
-		}
 	}
 
 	private class GetContacts extends AsyncTask<Void, Void, Void> {
@@ -113,10 +109,10 @@ public class ExchangeInfoActivity extends LeftMenuInfoActivityBase {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-//			pDialog = new ProgressDialog();
-//			pDialog.setMessage("please wait...");
-//			pDialog.setCancelable(false);
-//			pDialog.show();
+			pDialog = new ProgressDialog(ExchangeInfoActivity.this);
+			pDialog.setMessage("数据加载中，请稍后...");
+			pDialog.setCancelable(false);
+			pDialog.show();
 		}
 
 		@Override
@@ -133,11 +129,13 @@ public class ExchangeInfoActivity extends LeftMenuInfoActivityBase {
 
 						String id = c.getString(TAG_ID);
 						String name = c.getString(TAG_NAME);
+						String email = c.getString(TAG_EMAIL);
 
 						HashMap<String, String> contactHashMap = new HashMap<String, String>();
 
 						contactHashMap.put(TAG_ID, id);
 						contactHashMap.put(TAG_NAME, name);
+						contactHashMap.put(TAG_EMAIL, email);
 						contactList.add(contactHashMap);
 					}
 
@@ -158,8 +156,10 @@ public class ExchangeInfoActivity extends LeftMenuInfoActivityBase {
 			}
 			ListAdapter adapter = new SimpleAdapter(mContext, contactList,
 					R.layout.listview_exchange_item, new String[] { TAG_ID,
-							TAG_NAME }, new int[] { R.id.tv_exchange_item_info,
-							R.id.tv_exchange_item_goodsname });
+							TAG_NAME, TAG_EMAIL }, new int[] {
+							R.id.tv_exchange_item_info,
+							R.id.tv_exchange_item_goodsname,
+							R.id.tv_exchange_item_price });
 			goodsListView.setAdapter(adapter);
 		}
 	}
