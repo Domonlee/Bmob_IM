@@ -4,12 +4,12 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.app.Application;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import cn.bmob.im.BmobChat;
 import cn.bmob.im.BmobUserManager;
 import cn.bmob.im.bean.BmobChatUser;
@@ -17,11 +17,13 @@ import cn.bmob.im.db.BmobDB;
 import cn.bmob.im.util.BmobLog;
 import cn.bmob.v3.datatype.BmobGeoPoint;
 
+import com.baidu.frontia.FrontiaApplication;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
 import com.bmob.im.demo.util.CollectionUtils;
+import com.bmob.im.demo.util.Constant;
 import com.bmob.im.demo.util.SharePreferenceUtil;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -33,12 +35,13 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 
 /**
  * 自定义全局Applcation类
+ * 
  * @ClassName: CustomApplcation
  * @Description: TODO
  * @author smile
  * @date 2014-5-19 下午3:25:00
  */
-public class CustomApplcation extends Application {
+public class CustomApplcation extends FrontiaApplication {
 
 	public static CustomApplcation mInstance;
 	public LocationClient mLocationClient;
@@ -72,6 +75,7 @@ public class CustomApplcation extends Application {
 
 	/**
 	 * 初始化百度相关sdk initBaidumap
+	 * 
 	 * @Title: initBaidumap
 	 * @Description: TODO
 	 * @param
@@ -87,8 +91,9 @@ public class CustomApplcation extends Application {
 
 	/**
 	 * 初始化百度定位sdk
+	 * 
 	 * @Title: initBaiduLocClient
-	 * @Description: TODO
+	 * @Description:
 	 * @param
 	 * @return void
 	 * @throws
@@ -100,7 +105,7 @@ public class CustomApplcation extends Application {
 	}
 
 	/**
-	 * 实现实位回调监听
+	 * 实现定位回调监听
 	 */
 	public class MyLocationListener implements BDLocationListener {
 
@@ -110,8 +115,11 @@ public class CustomApplcation extends Application {
 			double latitude = location.getLatitude();
 			double longtitude = location.getLongitude();
 			if (lastPoint != null) {
+				// TODO
 				if (lastPoint.getLatitude() == location.getLatitude()
 						&& lastPoint.getLongitude() == location.getLongitude()) {
+					Constant.JINGDU = lastPoint.getLatitude();
+					Constant.WEIDU = lastPoint.getLongitude();
 					BmobLog.i("两次获取坐标相同");// 若两次请求获取到的地理位置坐标是相同的，则不再定位
 					mLocationClient.stop();
 					return;
@@ -176,7 +184,7 @@ public class CustomApplcation extends Application {
 			mMediaPlayer = MediaPlayer.create(this, R.raw.notify);
 		return mMediaPlayer;
 	}
-	
+
 	public final String PREF_LONGTITUDE = "longtitude";// 经度
 	private String longtitude = "";
 

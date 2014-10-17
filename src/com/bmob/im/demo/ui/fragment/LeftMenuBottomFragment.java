@@ -29,6 +29,8 @@ import com.bmob.im.demo.model.ItemCommon;
 import com.bmob.im.demo.model.ItemSetting;
 import com.bmob.im.demo.ui.ExchangeInfoActivity;
 import com.bmob.im.demo.ui.GroupbyCodeInfoActivity;
+import com.bmob.im.demo.ui.MainActivity;
+import com.bmob.im.demo.ui.MainInActivity;
 import com.bmob.im.demo.ui.MessageInfoActivity;
 import com.bmob.im.demo.ui.MyInviteInfoActivity;
 import com.bmob.im.demo.ui.MyshareInfoActivity;
@@ -112,8 +114,9 @@ public class LeftMenuBottomFragment extends Fragment {
 					Intent myIntent = null;
 					switch (position) {
 					case 0:
-						myIntent = new Intent(getActivity(),
-								MessageInfoActivity.class);
+						// myIntent = new Intent(getActivity(),
+						// MessageInfoActivity.class);
+						myIntent = new Intent(mContext, MainActivity.class);
 						break;
 					case 1:
 						myIntent = new Intent(getActivity(),

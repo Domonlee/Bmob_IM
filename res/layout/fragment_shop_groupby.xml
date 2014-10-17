@@ -22,7 +22,6 @@
             android:layout_marginLeft="20dip"
             android:layout_weight="1"
             android:drawableLeft="@drawable/btn_shop_location_myloca_selector"
-            android:onClick="onlTabSelect"
             android:text="我的位置"
             android:textColor="@drawable/shop_location_text_color_selector"
             android:textSize="14sp" />
@@ -32,8 +31,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:button="@null"
             android:drawableLeft="@drawable/btn_shop_location_sort_selector"
-            android:onClick="onlTabSelect"
             android:text="智能排序"
             android:textColor="@drawable/shop_location_text_color_selector"
             android:textSize="14sp" />
@@ -43,8 +42,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:button="@null"
             android:drawableLeft="@drawable/btn_shop_location_range_selector"
-            android:onClick="onlTabSelect"
             android:text="范围"
             android:textColor="@drawable/shop_location_text_color_selector"
             android:textSize="14sp" />
@@ -59,177 +58,23 @@
 
     <!-- 主界面六个分类 -->
 
-    <LinearLayout
-        android:id="@+id/shop_group_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/layout_locationbar"
-        android:orientation="vertical"
-        android:paddingTop="5dp" >
+    <RelativeLayout
+        android:id="@+id/rl_shopgroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_locationbar" >
 
-        <!-- 第一行 -->
-
-        <LinearLayout
-            android:id="@+id/shop_group_item1_layout"
-            android:layout_width="fill_parent"
+        <ListView
+            android:id="@+id/lv_shopgroup_list"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal" >
+            android:layout_margin="5dp"
+            android:cacheColorHint="#00000000"
+            android:divider="@drawable/left_divider_new"
+            android:visibility="gone" >
+        </ListView>
 
-            <!-- 餐饮美食 -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="10dp"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:id="@+id/shop_group_type_food"
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/shop_group_type_food" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:text="餐饮美食" />
-            </LinearLayout>
-
-            <!-- 美容保健 -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="10dp"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:id="@+id/shop_group_type_beauty"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/shop_group_type_beauty" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:text="美容保健" />
-            </LinearLayout>
-            
-            
-            
-            <!-- 休闲娱乐 -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="10dp"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:id="@+id/shop_group_type_funny"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/shop_group_type_funny" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:text="休闲娱乐" />
-            </LinearLayout>
-            </LinearLayout>
-            
-            <!-- 第二行 -->
-
-            <LinearLayout
-                android:id="@+id/shop_group_item2_layout"
-           android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_gravity="center_horizontal"
-                android:orientation="horizontal" >
-                
-                  <!-- 婚纱摄影 -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="10dp"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:id="@+id/shop_group_type_mv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/shop_group_type_mv" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:text="婚纱摄影" />
-            </LinearLayout>
-
-            <!-- 旅游酒店 -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="10dp"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:id="@+id/shop_group_type_hotel"
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/shop_group_type_hotel" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:text="旅游酒店" />
-            </LinearLayout>
-            
-            
-            
-            <!-- 其他 -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="10dp"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:id="@+id/shop_group_type_other"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/shop_group_type_other" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:text="其他分类" />
-            </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
+       
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -12,9 +12,11 @@ import android.widget.TextView;
 import com.bmob.im.demo.R;
 import com.bmob.im.demo.ui.AddFriendActivity;
 import com.bmob.im.demo.ui.FragmentBase;
+import com.bmob.im.demo.ui.MainActivity;
 
 public class FindFragment extends FragmentBase implements OnClickListener {
 	private TextView tv_friend;
+	private TextView xiaoxi;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -27,10 +29,12 @@ public class FindFragment extends FragmentBase implements OnClickListener {
 		super.onActivityCreated(savedInstanceState);
 		initView();
 		tv_friend.setOnClickListener(this);
+		xiaoxi.setOnClickListener(this);
 	}
 
 	private void initView() {
 		tv_friend = (TextView) findViewById(R.id.tv_find_myfriends);
+		xiaoxi = (TextView) findViewById(R.id.tv_find_messagepush);
 	}
 
 	@Override
@@ -43,6 +47,10 @@ public class FindFragment extends FragmentBase implements OnClickListener {
 					R.anim.push_left_out);
 			// getChildFragmentManager().beginTransaction().add(R.id.fragment_order_container
 			// arg1)
+			break;
+		case R.id.tv_find_messagepush:
+			Intent intent1 = new Intent(getActivity(), MainActivity.class);
+			startActivity(intent1);
 			break;
 
 		default:

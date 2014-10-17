@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="100dp"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:paddingTop="10dp" >
 
     <ImageView
         android:id="@+id/iv_exchange_item_pic"
@@ -15,7 +16,7 @@
         android:src="@drawable/exchange_item_pic" />
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dip"
@@ -50,12 +51,18 @@
             android:textSize="13sp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/btn_left_menu_back"
-        android:layout_width="29dp"
-        android:layout_height="32dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerInParent="true"
-        android:layout_marginRight="15dip"
-        android:background="@drawable/left_menu_top_back" />
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical|center_horizontal" >
+
+        <TextView
+            android:id="@+id/btn_left_menu_back"
+            android:layout_width="29dp"
+            android:layout_height="32dp"
+            android:layout_marginRight="15dip"
+            android:background="@drawable/left_menu_top_back" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,12 +1,9 @@
 package com.bmob.im.demo.ui;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -16,7 +13,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import cn.bmob.im.bean.BmobChatUser;
 import cn.bmob.im.util.BmobLog;
 import cn.bmob.v3.listener.SaveListener;
@@ -24,7 +20,6 @@ import cn.bmob.v3.listener.SaveListener;
 import com.bmob.im.demo.R;
 import com.bmob.im.demo.config.BmobConstants;
 import com.bmob.im.demo.util.CommonUtils;
-import com.bmob.im.demo.view.dialog.DialogTips;
 
 /**
  * @ClassName: LoginActivity
@@ -129,7 +124,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				Intent intent = new Intent(LoginActivity.this,
 						MainInActivity.class);
 				startActivity(intent);
-				finish();
+				//finish();
 			}
 
 			@Override

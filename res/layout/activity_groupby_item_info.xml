@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/theme_bg_color"
     android:orientation="vertical" >
-
-    <!-- order info top bar -->
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -21,12 +18,10 @@
             android:src="@drawable/shop_top_back_icon" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="9"
-            android:gravity="center"
-            android:text="兑换详情"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="团购卷详情"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
     </LinearLayout>
@@ -51,14 +46,17 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
                 android:background="#FFFFFF"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp" >
 
                 <ImageView
                     android:id="@+id/iv_exchange_item_pic"
                     android:layout_width="160dp"
                     android:layout_height="90dp"
-                    android:paddingLeft="5dip"
+                    android:paddingLeft="5dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/exchange_item_pic" />
 
@@ -88,110 +86,128 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="团购卷" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/tv_dingdan_youxiaoqi"
+                    android:text="有效期至：" />
+
+                <TextView
+                    android:id="@+id/tv_dingdan_youxiaoqi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="2014-12-31" />
+            </RelativeLayout>
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
                 android:background="#57BEAF" />
+
             <!-- 积分 兑换按钮 -->
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/exchange_item_price_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:id="@+id/exchange_item_price_tv"
+                    android:id="@+id/tv_mima"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_alignParentLeft="true"
+                    android:text="密码："
+                    android:textColor="#868686" />
+
+                <TextView
+                    android:id="@+id/tv_mima_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_mima"
+                    android:text="123 456 789"
+                    android:textColor="#868686" />
+
+                <TextView
+                    android:id="@+id/tv_juan_zhuangtai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="未消费" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#868686" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="套餐" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:background="#57BEAF" />
+
+            <!-- 兑换物品详情 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/tv_tugou_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:text="积分："
-                    android:textSize="22sp" />
+                    android:text="BBBB"
+                    android:textColor="#868686" />
 
-                <Button
-                    android:id="@+id/exchange_item_price_sumbit_btn"
+                <TextView
+                    android:id="@+id/tv_tugou_count"
                     android:layout_width="0dp"
-                    android:layout_height="45dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_exchange_item_buy_icon"
-                    android:text="兑换" />
+                    android:text="VVVV"
+                    android:textColor="#868686" />
+
+                <TextView
+                    android:id="@+id/tv_tugou_price"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="DDDD"
+                    android:textColor="#868686" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:background="#57BEAF" />
-
-            <!-- 套餐详情 -->
-
-            <LinearLayout
-                android:id="@+id/exchange_item_commobinfo_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:orientation="vertical"
-                android:paddingLeft="5dp" >
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="套餐"
-                    android:textColor="#000000"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:background="#868686" />
-
-                <!-- 套餐内容 -->
-
-                <TextView
-                    android:id="@+id/exchange_item_commobinfo_tv"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="经典肥牛王（38元/份)\n西冷云天（48元/份）\n至尊肥牛（48元/份）\n至尊太阳卷（35元/份）\n农家牛肉丸（18元/份）\n手工面条（8元/份）" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:background="#57BEAF" />
-            <!-- 订单信息 -->
-
-            <LinearLayout
-                android:id="@+id/exchange_item_orderinfo_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:orientation="vertical"
-                android:paddingLeft="5dp" >
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="订单详情"
-                    android:textColor="#000000"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:background="#868686" />
-
-                <!-- 订单内容 -->
-
-                <TextView
-                    android:id="@+id/exchange_item_orderinfo_tv"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+            <!-- 商品详情 -->
         </LinearLayout>
     </com.bmob.im.demo.view.MyScrollView>
 

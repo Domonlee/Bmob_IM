@@ -1,10 +1,11 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.bmob.im.demo.ui.fragment.MoneyFragment" >
 
- <!-- the money top bar -->
+    <!-- the money top bar -->
 
     <LinearLayout
         android:id="@+id/layout_money_topbar"
@@ -38,7 +39,50 @@
             android:background="@drawable/shop_top_share" />
     </LinearLayout>
 
-    <!-- the money body  -->
+    <!-- the money body -->
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp" >
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_money_qiandao"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="#50C0A7"
+            android:gravity="center_horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="点击签到"
+            android:textColor="#FFFFFF" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp" >
+
+        <TextView
+            android:id="@+id/tv_money_dati"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="#50C0A7"
+            android:paddingBottom="10dp"
+            android:gravity="center_horizontal"
+            android:paddingTop="10dp"
+            android:text="点击答题"
+            android:textColor="#FFFFFF" />
+    </RelativeLayout>
+
+    <com.bmob.im.demo.view.MyScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/layout_money_topbar"
+        android:fillViewport="true"
+        android:visibility="gone" >
+    </com.bmob.im.demo.view.MyScrollView>
+
+</LinearLayout>
