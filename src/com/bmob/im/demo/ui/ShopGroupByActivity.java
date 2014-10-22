@@ -1,18 +1,30 @@
 package com.bmob.im.demo.ui;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.json.JSONArray;
+
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bmob.im.demo.CustomApplcation;
 import com.bmob.im.demo.R;
 import com.bmob.im.demo.ui.fragment.ShopTopOneFragment;
 import com.bmob.im.demo.ui.fragment.ShopTopThreeFragment;
 import com.bmob.im.demo.ui.fragment.ShopTopTwoFragment;
+import com.bmob.im.demo.util.Constant;
+import com.bmob.im.demo.view.task.JiFenTask;
+import com.bmob.im.demo.view.task.XianShiGouTask;
 
 public class ShopGroupByActivity extends FragmentBase {
 	private TextView[] tTabs;
@@ -25,6 +37,21 @@ public class ShopGroupByActivity extends FragmentBase {
 	private int currenttTabIndex = 0;
 	private View view;
 
+	private Activity activity;
+	private ProgressDialog pDialog;
+	private JSONArray contacts;
+	private TextView share;
+	private ArrayList<HashMap<String, String>> contactList = new ArrayList<HashMap<String, String>>();
+	private boolean isInit;
+
+	public void setActivity(Activity activity) {
+		this.activity = activity;
+	}
+
+	public void setView(View view) {
+		this.view = view;
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,8 +60,12 @@ public class ShopGroupByActivity extends FragmentBase {
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		view = inflater.inflate(R.layout.fragment_shop, container, false);
-		return view;
+		View v = inflater.inflate(R.layout.fragment_shop, container, false);
+		share = (TextView) v.findViewById(R.id.tv_shop_top_share);
+		view = LayoutInflater.from(activity).inflate(
+				R.layout.listview_footview, null);
+		// isInit = Frontia.init(getActivity(), Constant.API_KEY);
+		return v;
 	}
 
 	@Override
@@ -59,6 +90,13 @@ public class ShopGroupByActivity extends FragmentBase {
 				setSelected(1, 0, 2);
 				tindex = 1;
 				selectFargment(tindex, currenttTabIndex);
+				XianShiGouTask task = new XianShiGouTask(activity);
+				task.setList(shopTopTwoFragment.list);
+				task.setUrl(Constant.XIANSHIQIANGGOU);
+				task.setTwoFragment(shopTopTwoFragment);
+				task.setView(view);
+				task.execute();
+
 			}
 		});
 
@@ -69,15 +107,25 @@ public class ShopGroupByActivity extends FragmentBase {
 				setSelected(2, 0, 1);
 				tindex = 2;
 				selectFargment(tindex, currenttTabIndex);
+
+				JiFenTask task = new JiFenTask(activity);
+				task.setList(shopTopThreeFragment.list);
+				task.setUrl(Constant.JIFENDUIHUAN_URL);
+				task.execute();
+
 			}
 		});
+
 	}
 
 	private void initView() {
 
 		shopTopOneFragment = new ShopTopOneFragment();
+		shopTopOneFragment.setActivity(activity);
 		shopTopTwoFragment = new ShopTopTwoFragment();
+		shopTopTwoFragment.setActivity(activity);
 		shopTopThreeFragment = new ShopTopThreeFragment();
+
 		fragments = new Fragment[] { shopTopOneFragment, shopTopTwoFragment,
 				shopTopThreeFragment };
 
@@ -94,12 +142,23 @@ public class ShopGroupByActivity extends FragmentBase {
 				.add(R.id.shop_fragment_container, shopTopThreeFragment)
 				.hide(shopTopThreeFragment).hide(shopTopTwoFragment)
 				.show(shopTopOneFragment).commit();
+
+		share.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (isInit) {
+					CustomApplcation.mInstance.showShare();
+				}
+			}
+		});
 	}
 
 	/**
 	 * 选择Top Bar上面的按钮
 	 * 
-	 * @param x  选中的菜单
+	 * @param x
+	 *            选中的菜单
 	 * @param y
 	 * @param z
 	 * @author Domon
@@ -111,9 +170,9 @@ public class ShopGroupByActivity extends FragmentBase {
 	}
 
 	/**
-	 * @author Domon 
+	 * @author Domon
 	 */
-	public void selectFargment(int t,int c) {
+	public void selectFargment(int t, int c) {
 		if (currenttTabIndex != tindex) {
 			FragmentTransaction transaction = getFragmentManager()
 					.beginTransaction();
@@ -126,4 +185,5 @@ public class ShopGroupByActivity extends FragmentBase {
 		}
 		currenttTabIndex = tindex;
 	}
+
 }

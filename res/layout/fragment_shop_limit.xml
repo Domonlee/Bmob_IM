@@ -2,31 +2,45 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    
-    <LinearLayout 
+
+    <LinearLayout
         android:id="@+id/Layout_shop_limit_top"
-        android:layout_height="wrap_content"
         android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:background="#FFFFFF"
-        android:orientation="vertical"
-        >
-       <TextView 
-           android:layout_width="fill_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginLeft="10dip"
-           android:text="抢购已开始，21点结束呦~"
-           android:textColor="#FC7602"
-           android:textSize="15sp"
-           /> 
-           
-       <TextView 
-           android:id="@+id/tv_fragment_shop_limit_time"
-           android:layout_width="fill_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginLeft="10dip"
-           android:textColor="#FC7602"
-           android:textSize="15sp"
-           />
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:text="抢购已开始，21点结束呦~"
+            android:textColor="#FC7602"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_fragment_shop_limit_time"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:textColor="#FC7602"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_top_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lv_xianshiqiang"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:cacheColorHint="#00000000"
+            android:divider="@drawable/left_divider_new" >
+        </ListView>
     </LinearLayout>
 
 </RelativeLayout>

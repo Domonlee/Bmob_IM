@@ -28,7 +28,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bmob.im.demo.R;
+import com.bmob.im.demo.util.Constant;
 import com.bmob.im.demo.util.MyHttp;
+import com.bmob.im.demo.view.task.JiFenTask;
+import com.bmob.im.demo.view.task.CityTask;
+import com.bmob.im.demo.view.task.MyJiFenTask;
 
 public class ExchangeInfoActivity extends LeftMenuInfoActivityBase {
 	// public class ExchangeInfoActivity extends Activity {
@@ -70,32 +74,11 @@ public class ExchangeInfoActivity extends LeftMenuInfoActivityBase {
 	private void initValiData() {
 		mContext = getApplicationContext();
 		contactList = new ArrayList<HashMap<String, String>>();
-		goodsListView.setOnItemClickListener(new OnItemClickListener() {
 
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				String name = ((TextView) view
-						.findViewById(R.id.tv_exchange_item_goodsname))
-						.getText().toString();
-				String idinfo = ((TextView) view
-						.findViewById(R.id.tv_exchange_item_info)).getText()
-						.toString();
-				String price = ((TextView) view
-						.findViewById(R.id.tv_exchange_item_price)).getText()
-						.toString();
-
-				Toast.makeText(getApplicationContext(), "111", 1000).show();
-				Intent getInfoDetailIntent = new Intent(
-						ExchangeInfoActivity.this,
-						SingleExchangeInfoActivity.class);
-				getInfoDetailIntent.putExtra(TAG_NAME, name);
-				getInfoDetailIntent.putExtra(TAG_ID, idinfo);
-				getInfoDetailIntent.putExtra(TAG_EMAIL, price);
-				startActivity(getInfoDetailIntent);
-			}
-		});
-		new GetContacts().execute();
+		MyJiFenTask task = new MyJiFenTask(ExchangeInfoActivity.this);
+		task.setList(goodsListView);
+		task.setUrl(Constant.MYDUIHUAN_URL + "userid=" + 1);
+		task.execute();
 	}
 
 	private void initView() {
@@ -104,63 +87,4 @@ public class ExchangeInfoActivity extends LeftMenuInfoActivityBase {
 
 	}
 
-	private class GetContacts extends AsyncTask<Void, Void, Void> {
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			pDialog = new ProgressDialog(ExchangeInfoActivity.this);
-			pDialog.setMessage("数据加载中，请稍后...");
-			pDialog.setCancelable(false);
-			pDialog.show();
-		}
-
-		@Override
-		protected Void doInBackground(Void... params) {
-			MyHttp myHttp = new MyHttp();
-			String jsonString = myHttp.httpGet(url);
-			if (jsonString != null) {
-				try {
-					JSONObject jsonObject = new JSONObject(jsonString);
-					contacts = jsonObject.getJSONArray(TAG_CONTACTS);
-
-					for (int i = 0; i < contacts.length(); i++) {
-						JSONObject c = contacts.getJSONObject(i);
-
-						String id = c.getString(TAG_ID);
-						String name = c.getString(TAG_NAME);
-						String email = c.getString(TAG_EMAIL);
-
-						HashMap<String, String> contactHashMap = new HashMap<String, String>();
-
-						contactHashMap.put(TAG_ID, id);
-						contactHashMap.put(TAG_NAME, name);
-						contactHashMap.put(TAG_EMAIL, email);
-						contactList.add(contactHashMap);
-					}
-
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			} else {
-				Log.e("ServiceHandler", "Couldn't get any data from the url");
-			}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Void result) {
-			super.onPostExecute(result);
-			if (pDialog.isShowing()) {
-				pDialog.dismiss();
-			}
-			ListAdapter adapter = new SimpleAdapter(mContext, contactList,
-					R.layout.listview_exchange_item, new String[] { TAG_ID,
-							TAG_NAME, TAG_EMAIL }, new int[] {
-							R.id.tv_exchange_item_info,
-							R.id.tv_exchange_item_goodsname,
-							R.id.tv_exchange_item_price });
-			goodsListView.setAdapter(adapter);
-		}
-	}
 }

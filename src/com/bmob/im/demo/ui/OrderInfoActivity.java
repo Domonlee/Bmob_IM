@@ -1,21 +1,41 @@
 package com.bmob.im.demo.ui;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.bmob.im.demo.R;
 import com.bmob.im.demo.ui.fragment.OrderTopOneFragment;
-import com.bmob.im.demo.ui.fragment.OrderTopThreeFragment;
 import com.bmob.im.demo.ui.fragment.OrderTopTwoFragment;
+import com.bmob.im.demo.util.Constant;
+import com.bmob.im.demo.util.MyHttp;
+import com.bmob.im.demo.view.task.DingDanTask;
+import com.bmob.im.demo.view.task.CityTask;
+import com.bmob.im.newview.OrderInfoItemActivity;
 
 //						_ooOoo_  
 //					   o8888888o  
@@ -50,19 +70,23 @@ import com.bmob.im.demo.ui.fragment.OrderTopTwoFragment;
 
 /**
  * @author Domon
- *
+ * 
  */
 public class OrderInfoActivity extends LeftMenuInfoActivityBase {
 	private OrderTopOneFragment oneFragment;
 	private OrderTopTwoFragment twoFragment;
-	private OrderTopThreeFragment threeFragment;
 	private Fragment[] fragments;
+	private ListView list;
 
 	private ImageView btnBack;
 
 	private TextView[] topTab;
 	private int cIndex = 0;
 	private int index;
+
+	private ProgressDialog pDialog;
+	private JSONArray contacts;
+	private ArrayList<HashMap<String, String>> contactList = new ArrayList<HashMap<String, String>>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,14 +106,14 @@ public class OrderInfoActivity extends LeftMenuInfoActivityBase {
 
 		RelativeLayout layout = (RelativeLayout) findViewById(R.id.fragment_order_container);
 		layout.setOnTouchListener(new SlidingBackListener());
+
 	}
 
 	private void initView() {
 		oneFragment = new OrderTopOneFragment();
 		twoFragment = new OrderTopTwoFragment();
-		threeFragment = new OrderTopThreeFragment();
 
-		fragments = new Fragment[] { oneFragment, twoFragment, threeFragment };
+		fragments = new Fragment[] { oneFragment, twoFragment };
 
 		topTab = new TextView[3];
 
@@ -99,14 +123,41 @@ public class OrderInfoActivity extends LeftMenuInfoActivityBase {
 
 		topTab[0].setSelected(true);
 
+		list = (ListView) findViewById(R.id.lv_order);
+
 		btnBack = (ImageView) findViewById(R.id.btn_top_back);
 
 		getSupportFragmentManager().beginTransaction()
 				.add(R.id.fragment_order_container, oneFragment)
 				.add(R.id.fragment_order_container, twoFragment)
-				.add(R.id.fragment_order_container, threeFragment)
-				.hide(twoFragment).hide(threeFragment).show(oneFragment)
-				.commit();
+				.hide(twoFragment).show(oneFragment).commit();
+		list.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				String name = ((TextView) view
+						.findViewById(R.id.tv_exchange_item_goodsname))
+						.getText().toString();
+				String idinfo = ((TextView) view
+						.findViewById(R.id.tv_exchange_item_info)).getText()
+						.toString();
+				String gender = ((TextView) view
+						.findViewById(R.id.tv_exchange_item_price)).getText()
+						.toString();
+
+				Intent getInfoDetailIntent = new Intent(OrderInfoActivity.this,
+						OrderInfoItemActivity.class);
+				getInfoDetailIntent.putExtra(Constant.TAG_NAME, name);
+				getInfoDetailIntent.putExtra(Constant.TAG_ID, idinfo);
+				getInfoDetailIntent.putExtra(Constant.TAG_GENDER, gender);
+				startActivity(getInfoDetailIntent);
+			}
+		});
+		// 启动异步任务加载数据
+		DingDanTask task = new DingDanTask(OrderInfoActivity.this);
+		task.setList(list);
+		task.execute();
+
 	}
 
 	class TopTabOnClickListener implements OnClickListener {
@@ -169,4 +220,5 @@ public class OrderInfoActivity extends LeftMenuInfoActivityBase {
 
 		return super.onTouchEvent(event);
 	}
+
 }

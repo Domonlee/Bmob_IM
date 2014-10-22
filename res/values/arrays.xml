@@ -12,5 +12,12 @@
         <item>消息</item>
         <item>设置</item>
     </string-array>
+    <string-array name="fanwei_item">
+        <item>范围</item>
+        <item>500米</item>
+        <item>1000米</item>
+        <item>2000米</item>
+        <item>5000米</item>
+    </string-array>
 
 </resources>

@@ -232,7 +232,6 @@ public class LocationActivity extends BaseActivity implements
 
 	@Override
 	public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
-		// TODO Auto-generated method stub
 		if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
 			ShowToast("抱歉，未能找到结果");
 			return;

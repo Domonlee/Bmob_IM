@@ -9,12 +9,12 @@ import java.util.regex.Pattern;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import cn.bmob.im.bean.BmobChatUser;
 import cn.bmob.im.util.BmobLog;
@@ -32,6 +32,7 @@ public class RegisterActivity extends BaseActivity {
 	EditText et_username, et_password, et_pswagain, et_inputkey, et_invitecode,
 			et_telenum;
 	BmobChatUser currentUser;
+	private MyCount mc;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,7 @@ public class RegisterActivity extends BaseActivity {
 		btn_sendkey.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				sendMessage();
 				Toast.makeText(getApplicationContext(), "sending...",
 						Toast.LENGTH_LONG).show();
 			}
@@ -184,5 +186,29 @@ public class RegisterActivity extends BaseActivity {
 			tag = false;
 		}
 		return tag;
+	}
+
+	private void sendMessage() {
+		mc = new MyCount(60000, 1000);
+		mc.start();
+	}
+
+	/* 定义一个倒计时的内部类 */
+	class MyCount extends CountDownTimer {
+		public MyCount(long millisInFuture, long countDownInterval) {
+			super(millisInFuture, countDownInterval);
+		}
+
+		@Override
+		public void onFinish() {
+			btn_sendkey.setText("点击重新发送");
+			btn_sendkey.setClickable(true);
+		}
+
+		@Override
+		public void onTick(long millisUntilFinished) {
+			btn_sendkey.setClickable(false);
+			btn_sendkey.setText(millisUntilFinished / 1000 + "秒后重新发送");
+		}
 	}
 }

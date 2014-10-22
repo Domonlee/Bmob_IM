@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,9 +16,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.bmob.im.demo.R;
+import com.bmob.im.demo.lock.myService;
 import com.bmob.im.demo.ui.fragment.FindFragment;
 import com.bmob.im.demo.ui.fragment.LeftMenuBottomFragment;
 import com.bmob.im.demo.ui.fragment.MoneyFragment;
+import com.bmob.im.demo.view.task.CityTask;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.CanvasTransformer;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
@@ -41,7 +44,7 @@ public class MainInActivity extends SlidingFragmentActivity {
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main_in);
-
+		startService(new Intent(MainInActivity.this, myService.class));
 		initView();
 		initAnimation();
 		initSlidingMenu(savedInstanceState);
@@ -62,6 +65,9 @@ public class MainInActivity extends SlidingFragmentActivity {
 		findFragment = new FindFragment();
 		moneyFragment = new MoneyFragment();
 		shopFragment = new ShopGroupByActivity();
+		shopFragment.setActivity(MainInActivity.this);
+		moneyFragment.setActivity(MainInActivity.this);
+
 		fragments = new Fragment[] { shopFragment, moneyFragment, findFragment };
 		// hide
 		getSupportFragmentManager().beginTransaction()
@@ -86,6 +92,7 @@ public class MainInActivity extends SlidingFragmentActivity {
 			bindex = 0;
 			break;
 		case R.id.btn_bm_money:
+			startMoneyFragment();
 			bindex = 1;
 			break;
 		case R.id.btn_bm_find:
@@ -108,6 +115,13 @@ public class MainInActivity extends SlidingFragmentActivity {
 		bTabs[currentbTabIndex].setSelected(false);
 		bTabs[bindex].setSelected(true);
 		currentbTabIndex = bindex;
+	}
+
+	/**
+	 * 展示MoneyFragment 加载数据
+	 */
+	private void startMoneyFragment() {
+
 	}
 
 	/**
