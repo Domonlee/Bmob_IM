@@ -115,74 +115,74 @@
                 android:inputType="number"
                 android:singleLine="true" />
         </LinearLayout>
+    </RelativeLayout>
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp" >
+
+        <TextView
+            android:id="@+id/tv_tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="所需积分：" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_tv1"
+            android:text="400" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/tv_duihuan_myjifen"
+            android:text="我的积分：" />
+
+        <TextView
+            android:id="@+id/tv_duihuan_myjifen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="4000" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="备   注：" />
+
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp" >
-
-            <TextView
-                android:id="@+id/tv_tv1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="所需积分：" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/tv_tv1"
-                android:text="400" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/tv_duihuan_myjifen"
-                android:text="我的积分：" />
-
-            <TextView
-                android:id="@+id/tv_duihuan_myjifen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="4000" />
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="备   注：" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="如果兑换的商品为现金，请填写银行卡号"
-                android:singleLine="true"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_duihuan"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/base_action_bar_height"
-            android:layout_margin="@dimen/activity_vertical_margin"
-            android:background="@drawable/btn_login_selector"
-            android:gravity="center"
-            android:text="兑换"
-            android:textColor="@color/base_color_text_white"
-            android:textSize="@dimen/text_size_large" />
+            android:hint="如果兑换的商品为现金，请填写银行卡号"
+            android:singleLine="true"
+            android:textSize="14sp" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_duihuan"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/base_action_bar_height"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:background="@drawable/btn_login_selector"
+        android:gravity="center"
+        android:text="兑换"
+        android:textColor="@color/base_color_text_white"
+        android:textSize="@dimen/text_size_large" />
 
     <TextView
         android:layout_width="match_parent"
