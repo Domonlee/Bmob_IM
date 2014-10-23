@@ -30,6 +30,7 @@ import com.bmob.im.demo.ui.fragment.SettingsFragment;
  * @author smile
  * @date 2014-5-29 обнГ2:45:35
  */
+//
 public class MainActivity extends ActivityBase implements EventListener {
 
 	private Button[] mTabs;
