@@ -17,6 +17,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import cn.bmob.im.BmobUserManager;
 import cn.bmob.v3.listener.UpdateListener;
@@ -42,6 +43,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * @author Domon
+ * 未完成：积分获取 展示
  * 
  */
 public class LeftMenuBottomFragment extends Fragment {
@@ -50,6 +52,7 @@ public class LeftMenuBottomFragment extends Fragment {
 	private ListView lv_Common, lv_Setting;
 	private Context mContext;
 	private ImageView iv_set_avatar;
+	private TextView tv_left_menu_username;
 	private RelativeLayout topbarLayout;
 
 	private List<ItemCommon> commonModels;
@@ -68,6 +71,7 @@ public class LeftMenuBottomFragment extends Fragment {
 			initValiData();
 			bindData();
 			refreshAvatar(user.getAvatar());
+			tv_left_menu_username.setText(user.getUsername());
 
 			lv_Common.setOnItemClickListener(new OnItemClickListener() {
 
@@ -137,8 +141,8 @@ public class LeftMenuBottomFragment extends Fragment {
 		lv_Common = (ListView) mView.findViewById(R.id.left_listview_common);
 		lv_Setting = (ListView) mView.findViewById(R.id.left_listview_setting);
 		iv_set_avatar = (ImageView) mView.findViewById(R.id.iv_left_menu_head);
+		tv_left_menu_username = (TextView) mView.findViewById(R.id.tv_left_menu_username);
 
-		// userManager = BmobUserManager.getInstance(mContext);
 		topbarLayout = (RelativeLayout) mView
 				.findViewById(R.id.layout_left_menu_topbar);
 		topbarLayout.setOnClickListener(new ButtonListener());

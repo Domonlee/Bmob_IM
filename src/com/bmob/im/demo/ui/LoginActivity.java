@@ -56,11 +56,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		btn_forgot = (TextView) findViewById(R.id.btn_forgotpsw);
 		btn_login.setOnClickListener(this);
 		btn_register.setOnClickListener(this);
-
 	}
 
 	public class MyBroadcastReceiver extends BroadcastReceiver {
-
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			if (intent != null
@@ -69,7 +67,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				finish();
 			}
 		}
-
 	}
 
 	@Override
@@ -134,7 +131,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				ShowToast(arg0);
 			}
 		});
-
 	}
 
 	@Override
