@@ -6,7 +6,7 @@
     <LinearLayout
         android:id="@+id/Layout_shop_limit_top"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="#FFFFFF"
         android:orientation="vertical" >
 
@@ -21,8 +21,8 @@
 
         <ListView
             android:id="@+id/lv_jifenduihuan"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:cacheColorHint="#00000000"
             android:divider="@drawable/left_divider_new" >

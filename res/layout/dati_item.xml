@@ -7,29 +7,78 @@
     android:padding="5dp" >
 
     <TextView
+        android:id="@+id/tv_dati_wenti"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="1.“全部2元，件件2元，统统2元”，请问什么是2元？" />
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="A：全部2元" />
+        android:orientation="horizontal" >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="B：件件2元" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A：" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="C：统统2元" />
+        <TextView
+            android:id="@+id/tv_dati_daan1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全部2元" />
+    </LinearLayout>
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="D：每件2元" />
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A：" />
+
+        <TextView
+            android:id="@+id/tv_dati_daan2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全部2元" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A：" />
+
+        <TextView
+            android:id="@+id/tv_dati_daan3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全部2元" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A：" />
+
+        <TextView
+            android:id="@+id/tv_dati_daan4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全部2元" />
+    </LinearLayout>
 
     <RadioGroup
         android:layout_width="match_parent"

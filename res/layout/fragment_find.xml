@@ -56,10 +56,10 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dip"
             android:layout_marginTop="10dip"
-            android:paddingTop="18dip"
             android:background="#FFFFFF"
             android:drawableLeft="@drawable/btn_find_myfriend_icon"
             android:paddingLeft="10dip"
+            android:paddingTop="18dip"
             android:text="我的好友"
             android:textColor="#000000"
             android:textSize="17sp" />
@@ -91,7 +91,7 @@
         </TextView>
 
         <TextView
-            android:id="@+id/tv_find_messagepush"
+            android:id="@+id/tv_find_shequ"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -100,56 +100,24 @@
             android:background="#FFFFFF"
             android:drawableLeft="@drawable/btn_find_messagepush_icon"
             android:paddingLeft="10dip"
-            android:text="消息推送"
+            android:text="社区"
             android:textColor="#000000"
             android:textSize="17sp" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_find_news"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_find_menulist"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="18dip"
+        android:background="#FFFFFF"
+        android:drawableLeft="@drawable/btn_find_messagepush_icon"
+        android:paddingLeft="30dp"
+        android:paddingTop="20dp"
+        android:text="新闻"
+        android:textColor="#000000"
+        android:textSize="17sp" />
 
 </RelativeLayout>
-    <!--
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/layout_find_menulist"
-        android:background="#FFFFFF"
-        android:orientation="vertical" >
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="20dip"
-            android:background="#F7F6F4" />
-
-        <TextView
-            android:id="@+id/tv_find_search"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dip"
-            android:layout_marginTop="20dip"
-            android:drawableLeft="@drawable/btn_find_search_icon"
-            android:paddingLeft="10dip"
-            android:text="扫一扫"
-            android:textColor="#000000"
-            android:textSize="17sp" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="20dip"
-            android:layout_marginTop="20dip"
-            android:background="#F7F6F4" />
-
-        <TextView
-            android:id="@+id/tv_find_news"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dip"
-            android:layout_marginTop="20dip"
-            android:drawableRight="@drawable/btn_find_news_icon"
-            android:paddingLeft="10dip"
-            android:text="新闻资讯"
-            android:textColor="#000000"
-            android:textSize="17sp" />
-
--->

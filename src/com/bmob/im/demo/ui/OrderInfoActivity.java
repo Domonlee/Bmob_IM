@@ -30,12 +30,11 @@ import android.widget.TextView;
 
 import com.bmob.im.demo.R;
 import com.bmob.im.demo.ui.fragment.OrderTopOneFragment;
-import com.bmob.im.demo.ui.fragment.OrderTopThreeFragment;
 import com.bmob.im.demo.ui.fragment.OrderTopTwoFragment;
 import com.bmob.im.demo.util.Constant;
 import com.bmob.im.demo.util.MyHttp;
 import com.bmob.im.demo.view.task.DingDanTask;
-import com.bmob.im.demo.view.task.MyDiandanTask;
+import com.bmob.im.demo.view.task.CityTask;
 import com.bmob.im.newview.OrderInfoItemActivity;
 
 //						_ooOoo_  
@@ -76,7 +75,6 @@ import com.bmob.im.newview.OrderInfoItemActivity;
 public class OrderInfoActivity extends LeftMenuInfoActivityBase {
 	private OrderTopOneFragment oneFragment;
 	private OrderTopTwoFragment twoFragment;
-	private OrderTopThreeFragment threeFragment;
 	private Fragment[] fragments;
 	private ListView list;
 
@@ -108,18 +106,14 @@ public class OrderInfoActivity extends LeftMenuInfoActivityBase {
 
 		RelativeLayout layout = (RelativeLayout) findViewById(R.id.fragment_order_container);
 		layout.setOnTouchListener(new SlidingBackListener());
-		// 启动异步任务加载数据
-		DingDanTask task = new DingDanTask(OrderInfoActivity.this);
-		task.setList(list);
-		task.execute();
+
 	}
 
 	private void initView() {
 		oneFragment = new OrderTopOneFragment();
 		twoFragment = new OrderTopTwoFragment();
-		threeFragment = new OrderTopThreeFragment();
 
-		fragments = new Fragment[] { oneFragment, twoFragment, threeFragment };
+		fragments = new Fragment[] { oneFragment, twoFragment };
 
 		topTab = new TextView[3];
 
@@ -136,9 +130,7 @@ public class OrderInfoActivity extends LeftMenuInfoActivityBase {
 		getSupportFragmentManager().beginTransaction()
 				.add(R.id.fragment_order_container, oneFragment)
 				.add(R.id.fragment_order_container, twoFragment)
-				.add(R.id.fragment_order_container, threeFragment)
-				.hide(twoFragment).hide(threeFragment).show(oneFragment)
-				.commit();
+				.hide(twoFragment).show(oneFragment).commit();
 		list.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -161,6 +153,10 @@ public class OrderInfoActivity extends LeftMenuInfoActivityBase {
 				startActivity(getInfoDetailIntent);
 			}
 		});
+		// 启动异步任务加载数据
+		DingDanTask task = new DingDanTask(OrderInfoActivity.this);
+		task.setList(list);
+		task.execute();
 
 	}
 

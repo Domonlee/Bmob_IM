@@ -7,8 +7,10 @@ import com.bmob.im.demo.R;
 import com.bmob.im.demo.ui.SingleGroupbyInfoActivity;
 import com.bmob.im.demo.util.Constant;
 import com.bmob.im.demo.util.HttpUtil;
+import com.bmob.im.demo.util.ImageLoadOptions;
 import com.bmob.im.demo.util.JSONUtil;
 import com.bmob.im.newview.XianShiItemActivity;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -65,6 +67,7 @@ public class MyTuanGouJuanTask extends AsyncTask<Void, Void, Void> {
 						R.id.tv_exchange_item_info,
 						R.id.tv_exchange_item_goodsname,
 						R.id.tv_exchange_item_price });
+		
 		list.setAdapter(adapter);
 		list.setOnItemClickListener(new OnItemClickListener() {
 

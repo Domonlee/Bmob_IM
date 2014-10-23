@@ -10,8 +10,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
-import android.util.Log;
-
 public class HttpUtil {
 	public static String httpGet(String url) {
 		String response = null;
@@ -20,6 +18,8 @@ public class HttpUtil {
 		HttpResponse httpResponse;
 		try {
 			httpResponse = httpClient.execute(httpGet);
+			
+
 			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				response = EntityUtils.toString(httpResponse.getEntity());
 			}

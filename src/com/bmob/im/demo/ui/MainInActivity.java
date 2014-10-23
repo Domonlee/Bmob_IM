@@ -16,10 +16,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.bmob.im.demo.R;
+import com.bmob.im.demo.lock.myService;
 import com.bmob.im.demo.ui.fragment.FindFragment;
 import com.bmob.im.demo.ui.fragment.LeftMenuBottomFragment;
 import com.bmob.im.demo.ui.fragment.MoneyFragment;
-import com.bmob.im.demo.view.task.MyDiandanTask;
+import com.bmob.im.demo.view.task.CityTask;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.CanvasTransformer;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
@@ -43,7 +44,7 @@ public class MainInActivity extends SlidingFragmentActivity {
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main_in);
-
+		startService(new Intent(MainInActivity.this, myService.class));
 		initView();
 		initAnimation();
 		initSlidingMenu(savedInstanceState);

@@ -37,7 +37,7 @@
     <ListView
         android:id="@+id/lv_dati"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/layout_money_topbar"
         android:background="#C6C6C6"
         android:divider="@null"

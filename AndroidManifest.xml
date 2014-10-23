@@ -5,7 +5,7 @@
     android:versionName="1.1.1" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="14" />
 
     <supports-screens
@@ -299,6 +299,72 @@
         <activity
             android:name="com.bmob.im.newview.DaTiActivity"
             android:label="@string/title_activity_da_ti" >
+        </activity>
+        <!-- 锁屏配置 -->
+        <activity android:name="com.bmob.im.demo.lock.HomeActivity" />
+        <activity android:name="com.bmob.im.demo.lock.WebActivity" />
+
+        <service android:name="com.bmob.im.demo.lock.myService" >
+            <intent-filter>
+
+                <!-- 系统启动完成后会调用 -->
+                <action android:name="com.bmob.im.demo.lock.myService" >
+                </action>
+            </intent-filter>
+        </service>
+
+        <receiver android:name="com.bmob.im.demo.lock.BootReceiver" >
+            <intent-filter>
+
+                <!-- 系统启动完成后会调用 -->
+                <action android:name="android.intent.action.BOOT_COMPLETED" >
+                </action>
+            </intent-filter>
+        </receiver>
+        <!-- 锁屏配置 END -->
+        <!-- 分享配置 -->
+        <activity
+            android:name="cn.sharesdk.framework.ShareSDKUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+            <intent-filter>
+                <data android:scheme="tencent100371282" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- 微信分享回调 -->
+        <activity
+            android:name="com.bmob.im.demo.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- 分享配置 END -->
+        <activity
+            android:name="com.bmob.im.newview.NewsActivity"
+            android:label="@string/title_activity_news" >
+        </activity>
+        <activity
+            android:name="com.bmob.im.newview.NewsInfoActivity"
+            android:label="@string/title_activity_news_info" >
+        </activity>
+        <activity
+            android:name="com.bmob.im.newview.ShequActivity"
+            android:label="@string/title_activity_shequ" >
+        </activity>
+        <activity
+            android:name="com.bmob.im.newview.ShequInfoActivity"
+            android:label="@string/title_activity_shequ_info" >
+        </activity>
+        <activity
+            android:name="com.bmob.im.demo.DuiHuanActivity"
+            android:label="@string/title_activity_dui_huan" >
         </activity>
     </application>
 

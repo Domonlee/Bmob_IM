@@ -214,6 +214,7 @@
                         android:text="订单号:" />
 
                     <TextView
+                        android:id="@+id/tv_order_dingdanhao"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="123456789" />
@@ -232,6 +233,7 @@
                         android:text="购买手机号:" />
 
                     <TextView
+                        android:id="@+id/tv_order_phonenumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="123456789" />
@@ -248,6 +250,7 @@
                         android:text="付款时间:" />
 
                     <TextView
+                        android:id="@+id/tv_order_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="123456789" />
@@ -263,9 +266,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="数量:" />
+                        android:text="剩余数量:" />
 
                     <TextView
+                        android:id="@+id/tv_order_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="123456789" />
@@ -282,6 +286,7 @@
                         android:text="总价:" />
 
                     <TextView
+                        android:id="@+id/tv_order_zongjia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="123456789" />

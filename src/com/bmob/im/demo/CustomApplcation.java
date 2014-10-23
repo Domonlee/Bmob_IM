@@ -16,6 +16,8 @@ import cn.bmob.im.bean.BmobChatUser;
 import cn.bmob.im.db.BmobDB;
 import cn.bmob.im.util.BmobLog;
 import cn.bmob.v3.datatype.BmobGeoPoint;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 import com.baidu.frontia.FrontiaApplication;
 import com.baidu.location.BDLocation;
@@ -113,6 +115,8 @@ public class CustomApplcation extends FrontiaApplication {
 		public void onReceiveLocation(BDLocation location) {
 			// Receive Location
 			double latitude = location.getLatitude();
+//			Log.v("cheng", location.getCity()+"1");
+//			Log.v("cheng", location.getCityCode()+"2");
 			double longtitude = location.getLongitude();
 			if (lastPoint != null) {
 				// TODO
@@ -276,4 +280,33 @@ public class CustomApplcation extends FrontiaApplication {
 		setLongtitude(null);
 	}
 
+	// TODO 分享内容编辑
+	public void showShare() {
+		ShareSDK.initSDK(this);
+		OnekeyShare oks = new OnekeyShare();
+		// 关闭sso授权
+		oks.disableSSOWhenAuthorize();
+
+		// 分享时Notification的图标和文字
+		oks.setNotification(R.drawable.ic_launcher,
+				getString(R.string.app_name));
+		// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+		oks.setTitle(getString(R.string.action_share));
+		// titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+		oks.setTitleUrl("http://www.woaisp.com/");
+		// text是分享文本，所有平台都需要这个字段
+		oks.setText("快来下载赚取积分吧");
+		// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+		oks.setImagePath("/sdcard/test.jpg");
+		// url仅在微信（包括好友和朋友圈）中使用
+		oks.setUrl("http://www.woaisp.com/");
+		// comment是我对这条分享的评论，仅在人人网和QQ空间使用
+		oks.setComment("哎哟，不错哟");
+		// site是分享此内容的网站名称，仅在QQ空间使用
+		oks.setSite(getString(R.string.app_name));
+		// siteUrl是分享此内容的网站地址，仅在QQ空间使用
+		oks.setSiteUrl("http://www.woaisp.com/");
+		// 启动分享GUI
+		oks.show(this);
+	}
 }

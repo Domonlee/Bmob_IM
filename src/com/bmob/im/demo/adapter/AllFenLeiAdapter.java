@@ -1,35 +1,36 @@
 package com.bmob.im.demo.adapter;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 
 import com.bmob.im.demo.R;
-import com.bmob.im.demo.ui.fragment.ShopTopOneFragment;
+import com.bmob.im.demo.bean.TuanGuangGao;
 import com.bmob.im.demo.ui.fragment.TuanGouFuFragment;
-import com.bmob.im.demo.ui.fragment.TuanGouZhuFragment;
-import com.bmob.im.demo.util.CollectionUtils;
 import com.bmob.im.demo.util.Constant;
 import com.bmob.im.demo.util.HeaderViewUtil;
+import com.bmob.im.demo.util.ImageLoadOptions;
 import com.bmob.im.demo.view.task.TuanGouTask;
+import com.bmob.im.newview.MainFoodActivity;
+import com.bmob.im.newview.MainJiuDianActivity;
+import com.bmob.im.newview.MainMeiRongActivity;
+import com.bmob.im.newview.MainQiTaActivity;
+import com.bmob.im.newview.MainSheYingActivity;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 public class AllFenLeiAdapter extends BaseAdapter implements OnClickListener {
-	public ArrayList<HashMap<String, String>> qilist = new ArrayList<HashMap<String, String>>();
-	private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+	public ArrayList<TuanGuangGao> imagelist;
+	private ArrayList<HashMap<String, String>> data;
 	private Activity activity;
 	private ImageView food;
 	private ImageView meirong;
@@ -38,28 +39,17 @@ public class AllFenLeiAdapter extends BaseAdapter implements OnClickListener {
 	private ImageView lvyou;
 	private ImageView qita;
 	private View view;
+	private int i;
 	// 排序按钮是否可点
-	private boolean isxuanzefenlei;
-	private ListView list;
 
-	private ShopTopOneFragment fragment;
-	private TuanGouZhuFragment zhuFragment;
 	private TuanGouFuFragment fuFragment;
-	
-	public void setFragment(ShopTopOneFragment fragment) {
-		this.fragment = fragment;
-	}
 
-	public void setZhuFragment(TuanGouZhuFragment zhuFragment) {
-		this.zhuFragment = zhuFragment;
+	public void setImagelist(ArrayList<TuanGuangGao> imagelist) {
+		this.imagelist = imagelist;
 	}
 
 	public void setFuFragment(TuanGouFuFragment fuFragment) {
 		this.fuFragment = fuFragment;
-	}
-
-	public void setList(ListView list) {
-		this.list = list;
 	}
 
 	public void setList(ArrayList<HashMap<String, String>> list) {
@@ -72,7 +62,7 @@ public class AllFenLeiAdapter extends BaseAdapter implements OnClickListener {
 
 	@Override
 	public int getCount() {
-		return data.size() + 1;
+		return data.size() + 2;
 	}
 
 	@Override
@@ -87,6 +77,7 @@ public class AllFenLeiAdapter extends BaseAdapter implements OnClickListener {
 
 	@Override
 	public View getView(int position, View v, ViewGroup parent) {
+
 		if (position == 0) {
 			v = LayoutInflater.from(activity).inflate(
 					R.layout.listview_header_item, null);
@@ -104,21 +95,80 @@ public class AllFenLeiAdapter extends BaseAdapter implements OnClickListener {
 			qita.setOnClickListener(this);
 		} else if (position == 1) {
 			v = HeaderViewUtil.getHeaderView(activity);
+			ImageView image = (ImageView) v.findViewById(R.id.iv_header_imge);
+			TextView qianggou = (TextView) v.findViewById(R.id.tv_qiangou);
 
+			TextView qianggou1 = (TextView) v.findViewById(R.id.tv_qiangou1);
+			TextView qianggou2 = (TextView) v.findViewById(R.id.tv_qiangou2);
+			TextView qianggou3 = (TextView) v.findViewById(R.id.tv_qiangou3);
+			TextView qianggou4 = (TextView) v.findViewById(R.id.tv_qiangou4);
+
+			ImageView image1 = (ImageView) v.findViewById(R.id.iv_header_imge1);
+			ImageView image2 = (ImageView) v.findViewById(R.id.iv_header_imge2);
+			ImageView image3 = (ImageView) v.findViewById(R.id.iv_header_imge3);
+			ImageView image4 = (ImageView) v.findViewById(R.id.iv_header_imge4);
+			if (imagelist != null && !imagelist.isEmpty()) {
+
+				for (i = 0; i < imagelist.size(); i++) {
+
+					if (imagelist.get(i).getPosationid().equals("5")) {
+						ImageLoader.getInstance().displayImage(
+								Constant.IMAGE_BASE_URL
+										+ imagelist.get(i).getTgimg(), image,
+								ImageLoadOptions.getOptions());
+						setListenr(qianggou, i);
+
+					} else if (imagelist.get(i).getPosationid().equals("4")) {
+						ImageLoader.getInstance().displayImage(
+								Constant.IMAGE_BASE_URL
+										+ imagelist.get(i).getTgimg(), image4,
+								ImageLoadOptions.getOptions());
+						setListenr(qianggou4, i);
+					} else if (imagelist.get(i).getPosationid().equals("3")) {
+						ImageLoader.getInstance().displayImage(
+								Constant.IMAGE_BASE_URL
+										+ imagelist.get(i).getTgimg(), image3,
+								ImageLoadOptions.getOptions());
+						setListenr(qianggou3, i);
+
+					} else if (imagelist.get(i).getPosationid().equals("2")) {
+						ImageLoader.getInstance().displayImage(
+								Constant.IMAGE_BASE_URL
+										+ imagelist.get(i).getTgimg(), image2,
+								ImageLoadOptions.getOptions());
+						setListenr(qianggou2, i);
+
+					} else if (imagelist.get(i).getPosationid().equals("1")) {
+						ImageLoader.getInstance().displayImage(
+								Constant.IMAGE_BASE_URL
+										+ imagelist.get(i).getTgimg(), image1,
+								ImageLoadOptions.getOptions());
+						setListenr(qianggou1, i);
+
+					}
+
+				}
+			}
 		} else {
 
 			v = LayoutInflater.from(activity).inflate(
 					R.layout.listview_exchange_item, null);
-			TextView biaoti = (TextView) v
-					.findViewById(R.id.tv_exchange_item_info);
 			TextView fbiaoti = (TextView) v
+					.findViewById(R.id.tv_exchange_item_info);
+			TextView biaoti = (TextView) v
 					.findViewById(R.id.tv_exchange_item_goodsname);
 			TextView price = (TextView) v
 					.findViewById(R.id.tv_exchange_item_price);
+			ImageView image = (ImageView) v
+					.findViewById(R.id.iv_exchange_item_pic);
+			ImageLoader.getInstance().displayImage(
+					Constant.IMAGE_BASE_URL
+							+ data.get(position - 2).get(Constant.TUANGOU_IMG),
+					image, ImageLoadOptions.getOptions());
 
-			biaoti.setText(data.get(position - 1).get(Constant.TUANGOU_NMAE));
-			fbiaoti.setText(data.get(position - 1).get(Constant.TUANGOU_PKC));
-			price.setText(data.get(position - 1).get(Constant.TUANGOU_PJIGE));
+			biaoti.setText(data.get(position - 2).get(Constant.TUANGOU_NMAE));
+			fbiaoti.setText(data.get(position - 2).get(Constant.TUANGOU_PKC));
+			price.setText(data.get(position - 2).get(Constant.TUANGOU_PJIGE));
 
 		}
 
@@ -130,32 +180,32 @@ public class AllFenLeiAdapter extends BaseAdapter implements OnClickListener {
 		switch (v.getId()) {
 		// 餐饮美食
 		case R.id.shop_group_type_food:
-			Constant.paixu_type = Constant.TUANGOU_TYPE_FOOD;
+			Constant.TUANGOU_FENLEI_TYPE = Constant.TUANGOU_TYPE_FOOD;
 			showFood();
 			break;
 		// 美容保健
 		case R.id.shop_group_type_beauty:
-			Constant.paixu_type = Constant.TUANGOU_TYPE_MEIRONG;
+			Constant.TUANGOU_FENLEI_TYPE = Constant.TUANGOU_TYPE_MEIRONG;
 			showMeiRong();
 			break;
 		// 休闲娱乐
 		case R.id.shop_group_type_funny:
-			Constant.paixu_type = Constant.TUANGOU_TYPE_YULE;
+			Constant.TUANGOU_FENLEI_TYPE = Constant.TUANGOU_TYPE_YULE;
 			showYuLe();
 			break;
 		// 婚纱摄影
 		case R.id.shop_group_type_mv:
-			Constant.paixu_type = Constant.TUANGOU_TYPE_SHEYING;
+			Constant.TUANGOU_FENLEI_TYPE = Constant.TUANGOU_TYPE_SHEYING;
 			showSheYing();
 			break;
 		// 旅游酒店
 		case R.id.shop_group_type_hotel:
-			Constant.paixu_type = Constant.TUANGOU_TYPE_JIUDIAN;
+			Constant.TUANGOU_FENLEI_TYPE = Constant.TUANGOU_TYPE_JIUDIAN;
 			showJiuDian();
 			break;
 		// 其他
 		case R.id.shop_group_type_other:
-			Constant.paixu_type = Constant.TUANGOU_TYPE_QITA;
+			Constant.TUANGOU_FENLEI_TYPE = Constant.TUANGOU_TYPE_QITA;
 			showQiTa();
 			break;
 		}
@@ -165,7 +215,6 @@ public class AllFenLeiAdapter extends BaseAdapter implements OnClickListener {
 	 * 其他
 	 */
 	private void showQiTa() {
-		showfuFragment();
 
 		if (view == null)
 			view = LayoutInflater.from(activity).inflate(
@@ -175,7 +224,7 @@ public class AllFenLeiAdapter extends BaseAdapter implements OnClickListener {
 				+ "&fenleiid=" + Constant.TUANGOU_TYPE_QITA);
 		fuFragment.list.setTag(Constant.TUANGOU_TYPE_QITA);
 		task.setList(fuFragment.list);
-		task.setContactList(qilist);
+		task.setContactList(data);
 		task.execute();
 	}
 
@@ -183,7 +232,6 @@ public class AllFenLeiAdapter extends BaseAdapter implements OnClickListener {
 	 * 旅游酒店
 	 */
 	private void showJiuDian() {
-		showfuFragment();
 		if (view == null)
 			view = LayoutInflater.from(activity).inflate(
 					R.layout.listview_footview, null);
@@ -192,7 +240,7 @@ public class AllFenLeiAdapter extends BaseAdapter implements OnClickListener {
 				+ "&fenleiid=" + Constant.TUANGOU_TYPE_JIUDIAN);
 		fuFragment.list.setTag(Constant.TUANGOU_TYPE_JIUDIAN);
 		task.setList(fuFragment.list);
-		task.setContactList(qilist);
+		task.setContactList(data);
 		task.execute();
 	}
 
@@ -200,7 +248,6 @@ public class AllFenLeiAdapter extends BaseAdapter implements OnClickListener {
 	 * 婚纱摄影
 	 */
 	private void showSheYing() {
-		showfuFragment();
 		if (view == null)
 			view = LayoutInflater.from(activity).inflate(
 					R.layout.listview_footview, null);
@@ -209,7 +256,7 @@ public class AllFenLeiAdapter extends BaseAdapter implements OnClickListener {
 				+ "&fenleiid=" + Constant.TUANGOU_TYPE_SHEYING);
 		fuFragment.list.setTag(Constant.TUANGOU_TYPE_SHEYING);
 		task.setList(fuFragment.list);
-		task.setContactList(qilist);
+		task.setContactList(data);
 		task.execute();
 	}
 
@@ -217,7 +264,6 @@ public class AllFenLeiAdapter extends BaseAdapter implements OnClickListener {
 	 * 休闲娱乐
 	 */
 	private void showYuLe() {
-		showfuFragment();
 		if (view == null)
 			view = LayoutInflater.from(activity).inflate(
 					R.layout.listview_footview, null);
@@ -226,7 +272,7 @@ public class AllFenLeiAdapter extends BaseAdapter implements OnClickListener {
 				+ "&fenleiid=" + Constant.TUANGOU_TYPE_YULE);
 		fuFragment.list.setTag(Constant.TUANGOU_TYPE_YULE);
 		task.setList(fuFragment.list);
-		task.setContactList(qilist);
+		task.setContactList(data);
 		task.execute();
 	}
 
@@ -234,7 +280,6 @@ public class AllFenLeiAdapter extends BaseAdapter implements OnClickListener {
 	 * 美容保健
 	 */
 	private void showMeiRong() {
-		showfuFragment();
 		if (view == null)
 			view = LayoutInflater.from(activity).inflate(
 					R.layout.listview_footview, null);
@@ -243,7 +288,7 @@ public class AllFenLeiAdapter extends BaseAdapter implements OnClickListener {
 				+ "&fenleiid=" + Constant.TUANGOU_TYPE_MEIRONG);
 		fuFragment.list.setTag(Constant.TUANGOU_TYPE_MEIRONG);
 		task.setList(fuFragment.list);
-		task.setContactList(qilist);
+		task.setContactList(data);
 		task.execute();
 	}
 
@@ -251,7 +296,6 @@ public class AllFenLeiAdapter extends BaseAdapter implements OnClickListener {
 	 * 餐饮美食
 	 */
 	private void showFood() {
-		showfuFragment();
 		// transaction.add(R.id.rl_shopgroup, shopGroupFragmen)
 		// .show(shopGroupFragmen).commit();
 		if (view == null)
@@ -262,19 +306,43 @@ public class AllFenLeiAdapter extends BaseAdapter implements OnClickListener {
 				+ "&fenleiid=" + Constant.TUANGOU_TYPE_FOOD);
 		fuFragment.list.setTag(Constant.TUANGOU_TYPE_FOOD);
 		task.setList(fuFragment.list);
-		task.setContactList(qilist);
+		task.setContactList(data);
 		task.execute();
 	}
 
 	/**
-	 * 显示分类fragment
+	 * 添加点击事件
+	 * 
+	 * @param qianggou
+	 * @param i2
 	 */
-	private void showfuFragment() {
-		isxuanzefenlei = true;
-		FragmentTransaction transaction = fragment.getFragmentManager()
-				.beginTransaction();
-		transaction.hide(zhuFragment);
-		// transaction.add(R.id.rl_shopgroup, fuFragment);
-		transaction.show(fuFragment).commit();
+	private void setListenr(TextView qianggou, final int i) {
+		qianggou.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				String type = imagelist.get(i).getFenlei();
+				Intent intent = new Intent();
+				if (type.equals("1")) {
+					intent.setClass(activity, MainFoodActivity.class);
+				} else if (type.equals("2")) {
+					intent.setClass(activity, MainMeiRongActivity.class);
+				} else if (type.equals("3")) {
+					intent.setClass(activity, MainMeiRongActivity.class);
+				} else if (type.equals("4")) {
+					intent.setClass(activity, MainSheYingActivity.class);
+				} else if (type.equals("5")) {
+					intent.setClass(activity, MainJiuDianActivity.class);
+				} else if (type.equals("7")) {
+					intent.setClass(activity, MainQiTaActivity.class);
+				}
+				Bundle bundle = new Bundle();
+				bundle.putSerializable(Constant.KEY, imagelist.get(i));
+				intent.putExtras(bundle);
+				activity.startActivity(intent);
+
+			}
+		});
+
 	}
 }

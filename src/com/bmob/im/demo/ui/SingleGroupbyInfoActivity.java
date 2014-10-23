@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.bmob.im.demo.R;
 import com.bmob.im.demo.util.Constant;
+import com.bmob.im.demo.util.ImageLoadOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class SingleGroupbyInfoActivity extends Activity {
 	private TextView name;
@@ -50,9 +52,13 @@ public class SingleGroupbyInfoActivity extends Activity {
 			counts = counts + s2[1] + "\n";
 			prices = prices + s2[2] + "\n";
 		}
-			fname.setText(names);
-			fcount.setText(counts);
-			fprice.setText(prices);
+		fname.setText(names);
+		fcount.setText(counts);
+		fprice.setText(prices);
+		ImageLoader.getInstance().displayImage(
+				Constant.IMAGE_BASE_URL
+						+ in.getStringExtra(Constant.TUANGOU_IMG), img,
+				ImageLoadOptions.getOptions());
 
 	}
 

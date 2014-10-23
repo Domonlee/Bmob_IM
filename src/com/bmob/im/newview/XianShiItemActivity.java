@@ -5,6 +5,8 @@ import com.bmob.im.demo.R.id;
 import com.bmob.im.demo.R.layout;
 import com.bmob.im.demo.R.menu;
 import com.bmob.im.demo.util.Constant;
+import com.bmob.im.demo.util.ImageLoadOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -57,6 +59,11 @@ public class XianShiItemActivity extends Activity {
 		stoptime.setText(endtime);
 		price.setText(jiage);
 		possword.setText(pwd);
+		// ImageLoader.getInstance().displayImage(
+		// Constant.IMAGE_BASE_URL
+		// + intent.getStringExtra(Constant.TUANGOU_IMG), image,
+		// ImageLoadOptions.getOptions());
+
 	}
 
 	private void addListener() {

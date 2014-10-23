@@ -7,23 +7,15 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bmob.im.demo.R;
-import com.bmob.im.demo.adapter.TuanGouAdapter;
 import com.bmob.im.demo.util.Constant;
 import com.bmob.im.demo.util.HttpUtil;
 import com.bmob.im.demo.util.JSONUtil;
-import com.bmob.im.demo.util.PixelUtil;
-import com.bmob.im.demo.util.WindowUtil;
 import com.bmob.im.newview.MainFoodActivity;
 import com.bmob.im.newview.MainJiuDianActivity;
 import com.bmob.im.newview.MainMeiRongActivity;
@@ -37,13 +29,16 @@ public class TiJiaoTask extends AsyncTask<Void, Void, Void> {
 	private String url;
 	private View view;
 	private ArrayList<HashMap<String, String>> contactList;
+	private ArrayList<HashMap<String, String>> imagelist;
 	private TextView jiazai;
-
-	private int count = 1;
 
 	public TiJiaoTask(Activity activity) {
 		this.activity = activity;
 
+	}
+
+	public void setImagelist(ArrayList<HashMap<String, String>> imagelist) {
+		this.imagelist = imagelist;
 	}
 
 	public void setList(ListView list) {
@@ -59,6 +54,7 @@ public class TiJiaoTask extends AsyncTask<Void, Void, Void> {
 		String jsonString = HttpUtil.httpGet(url);
 		if (jsonString != null) {
 			contactList = JSONUtil.getTuanGou(jsonString);
+			//imagelist = JSONUtil.getJiFenGuanggao(jsonString);
 		}
 		return null;
 	}

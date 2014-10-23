@@ -7,13 +7,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.bmob.im.demo.bean.MyDianDan;
+import com.bmob.im.demo.bean.TuanGuangGao;
+
 import android.util.Log;
 
 public class JSONUtil {
 	public static ArrayList<HashMap<String, String>> getData(String jsonString) {
 		ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 		JSONArray contacts = null;
-
+/////
 		if (jsonString != null) {
 			try {
 				JSONObject jsonObject = new JSONObject(jsonString);
@@ -47,37 +50,38 @@ public class JSONUtil {
 	 * @param jsonString
 	 * @return
 	 */
-	public static ArrayList<HashMap<String, String>> getAllFenLei(
-			String jsonString) {
-		ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
-		JSONArray contacts = null;
-
-		if (jsonString != null) {
-			try {
-				JSONObject jsonObject = new JSONObject(jsonString);
-				contacts = jsonObject.getJSONArray("umassage");
-
-				for (int i = 0; i < contacts.length(); i++) {
-					JSONObject c = contacts.getJSONObject(i);
-
-					String id = c.getString(Constant.BASE_ID);
-					String biaoti = c.getString(Constant.BASE_NAME);
-
-					HashMap<String, String> contactHashMap = new HashMap<String, String>();
-
-					contactHashMap.put(Constant.XIANSHI_ID, id);
-					contactHashMap.put(Constant.XIANSHI_BIAOTI, biaoti);
-
-					list.add(contactHashMap);
-				}
-
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-
-		}
-		return list;
-	}
+	// public static ArrayList<HashMap<String, String>> getAllFenLei(
+	// String jsonString) {
+	// ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String,
+	// String>>();
+	// JSONArray contacts = null;
+	//
+	// if (jsonString != null) {
+	// try {
+	// JSONObject jsonObject = new JSONObject(jsonString);
+	// contacts = jsonObject.getJSONArray("umassage");
+	//
+	// for (int i = 0; i < contacts.length(); i++) {
+	// JSONObject c = contacts.getJSONObject(i);
+	//
+	// String id = c.getString(Constant.BASE_ID);
+	// String biaoti = c.getString(Constant.BASE_NAME);
+	//
+	// HashMap<String, String> contactHashMap = new HashMap<String, String>();
+	//
+	// contactHashMap.put(Constant.XIANSHI_ID, id);
+	// contactHashMap.put(Constant.XIANSHI_BIAOTI, biaoti);
+	//
+	// list.add(contactHashMap);
+	// }
+	//
+	// } catch (JSONException e) {
+	// e.printStackTrace();
+	// }
+	//
+	// }
+	// return list;
+	// }
 
 	/**
 	 * 解析限时购
@@ -105,6 +109,7 @@ public class JSONUtil {
 					String starttime = c.getString(Constant.XIANSHI_STARTTIME);
 					String endtime = c.getString(Constant.XIANSHI_STOPTIME);
 					String pwd = c.getString(Constant.XIANSHI_PWD);
+					String img = c.getString(Constant.XIANSHI_IMG);
 
 					HashMap<String, String> contactHashMap = new HashMap<String, String>();
 
@@ -115,6 +120,7 @@ public class JSONUtil {
 					contactHashMap.put(Constant.XIANSHI_STARTTIME, starttime);
 					contactHashMap.put(Constant.XIANSHI_STOPTIME, endtime);
 					contactHashMap.put(Constant.XIANSHI_PWD, pwd);
+					contactHashMap.put(Constant.XIANSHI_IMG, img);
 
 					list.add(contactHashMap);
 				}
@@ -140,7 +146,7 @@ public class JSONUtil {
 		if (jsonString != null) {
 			try {
 				JSONObject jsonObject = new JSONObject(jsonString);
-				contacts = jsonObject.getJSONArray("umassage");
+				contacts = jsonObject.getJSONArray("umassage1");
 
 				for (int i = 0; i < contacts.length(); i++) {
 					JSONObject c = contacts.getJSONObject(i);
@@ -171,6 +177,52 @@ public class JSONUtil {
 	}
 
 	/**
+	 * 解析积分兑换 广告
+	 * 
+	 * @param jsonString
+	 * @return
+	 */
+	public static ArrayList<HashMap<String, String>> getJiFenGuanggao(
+			String jsonString) {
+		ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+		JSONArray contacts = null;
+		Log.i("cheng", "jsonString" + jsonString);
+		if (jsonString != null) {
+			try {
+				JSONObject jsonObject = new JSONObject(jsonString);
+				contacts = jsonObject.getJSONArray("tglist");
+
+				for (int i = 0; i < contacts.length(); i++) {
+					JSONObject c = contacts.getJSONObject(i);
+
+					String id = c.getString(Constant.JIFEN_ID);
+					String name = c.getString(Constant.JIFEN_NAME);
+					String img = c.getString(Constant.JIFEN_IMAGE);
+					String position = c.getString(Constant.JIFEN_POSITION);
+					String score = c.getString(Constant.JIFEN_SCORE);
+					String title = c.getString(Constant.JIFEN_TITLE);
+
+					HashMap<String, String> contactHashMap = new HashMap<String, String>();
+
+					contactHashMap.put(Constant.JIFEN_ID, id);
+					contactHashMap.put(Constant.JIFEN_NAME, name);
+					contactHashMap.put(Constant.JIFEN_IMAGE, img);
+					contactHashMap.put(Constant.JIFEN_POSITION, position);
+					contactHashMap.put(Constant.JIFEN_TITLE, title);
+					contactHashMap.put(Constant.JIFEN_SCORE, score);
+
+					list.add(contactHashMap);
+				}
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return list;
+	}
+
+	/**
 	 * 团购
 	 * 
 	 * @param jsonString
@@ -182,7 +234,6 @@ public class JSONUtil {
 		JSONArray contacts = null;
 		if (jsonString != null) {
 			try {
-				Log.i("cheng", "jsonString" + jsonString);
 				JSONObject jsonObject = new JSONObject(jsonString);
 				contacts = jsonObject.getJSONArray("umassage");
 
@@ -196,10 +247,12 @@ public class JSONUtil {
 					String img = c.getString(Constant.TUANGOU_IMG);
 					String text = c.getString(Constant.TUANGOU_PTEXT);
 					String jige = c.getString(Constant.TUANGOU_PJIGE);
-					String xiaoliang = c.getString(Constant.TUANGOU_XIAOLIANG);
+					String xiaoliang1 = c.getString(Constant.TUANGOU_XIAOLIANG);
 					String cjtg = c.getString(Constant.TUANGOU_CJTG);
 					String cgqg = c.getString(Constant.TUANGOU_CGQG);
 					String type = c.getString(Constant.TUANGOU_TYPE);
+					String kucun = c.getString(Constant.TUANGOU_KUNCUN);
+					String xiaoliang = c.getString(Constant.TUANGOU_XIANGLIANG);
 
 					HashMap<String, String> contactHashMap = new HashMap<String, String>();
 
@@ -210,12 +263,129 @@ public class JSONUtil {
 					contactHashMap.put(Constant.TUANGOU_IMG, img);
 					contactHashMap.put(Constant.TUANGOU_PTEXT, text);
 					contactHashMap.put(Constant.TUANGOU_PJIGE, jige);
-					contactHashMap.put(Constant.TUANGOU_XIAOLIANG, xiaoliang);
+					contactHashMap.put(Constant.TUANGOU_XIAOLIANG, xiaoliang1);
 					contactHashMap.put(Constant.TUANGOU_CJTG, cjtg);
 					contactHashMap.put(Constant.TUANGOU_CGQG, cgqg);
 					contactHashMap.put(Constant.TUANGOU_TYPE, type);
+					contactHashMap.put(Constant.TUANGOU_KUNCUN, kucun);
+					contactHashMap.put(Constant.TUANGOU_XIANGLIANG, xiaoliang);
 
 					list.add(contactHashMap);
+				}
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return list;
+	}
+
+	/**
+	 * 解析团购 广告
+	 * 
+	 * @param jsonString
+	 * @return
+	 */
+	public static ArrayList<TuanGuangGao> getZhuTuanGouGuanggao(
+			String jsonString) {
+		ArrayList<TuanGuangGao> list = new ArrayList<TuanGuangGao>();
+		JSONArray contacts = null;
+		Log.i("cheng", "jsonString" + jsonString);
+		if (jsonString != null) {
+			try {
+				JSONObject jsonObject = new JSONObject(jsonString);
+				contacts = jsonObject.getJSONArray("umassage");
+
+				for (int i = 0; i < contacts.length(); i++) {
+					JSONObject c = contacts.getJSONObject(i);
+
+					String id = c.getString(Constant.TUANGOU_ID);
+					String eptname = c.getString(Constant.TUANGOU_EPTNAME);
+					String img = c.getString(Constant.TUANGOU_TGIMG);
+					String positionname = c
+							.getString(Constant.TUANGOU_POSITIONNAME);
+					String positionid = c
+							.getString(Constant.TUANGOU_POSITIONID);
+					String spname = c.getString(Constant.TUANGOU_NMAE);
+					String biaoti = c.getString(Constant.TUANGOU_TGBIAOTI);
+					String fbiaoti = c.getString(Constant.TUANGOU_TGFUBIAOTI);
+					String yemian = c.getString(Constant.TUANGOU_YEMIAN);
+					String tgid = c.getString(Constant.TUANGOU_TGID);
+					String dianzhu = c.getString(Constant.TUANGOU_DIANZHU);
+					TuanGuangGao g = new TuanGuangGao();
+
+					g.setId(id);
+					g.setEptname(eptname);
+					g.setDiznzhu(dianzhu);
+					g.setPosationname(positionname);
+					g.setTgbiaoti(biaoti);
+					g.setTgfubiaoti(fbiaoti);
+					g.setTgid(tgid);
+					g.setTgimg(img);
+					g.setYemian(yemian);
+					g.setSpname(spname);
+					g.setPosationid(positionid);
+					list.add(g);
+				}
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return list;
+	}
+
+	/**
+	 * 解析团购 广告
+	 * 
+	 * @param jsonString
+	 * @return
+	 */
+	public static ArrayList<TuanGuangGao> getTuanGouGuanggao(String jsonString) {
+		ArrayList<TuanGuangGao> list = new ArrayList<TuanGuangGao>();
+		JSONArray contacts = null;
+		Log.i("cheng", "jsonString" + jsonString);
+		if (jsonString != null) {
+			try {
+				JSONObject jsonObject = new JSONObject(jsonString);
+				contacts = jsonObject.getJSONArray("tglist");
+
+				for (int i = 0; i < contacts.length(); i++) {
+					JSONObject c = contacts.getJSONObject(i);
+
+					String id = c.getString(Constant.TUANGOU_ID);
+					String eptname = c.getString(Constant.TUANGOU_EPTNAME);
+					String img = c.getString(Constant.TUANGOU_TGIMG);
+
+					String positionname = c
+							.getString(Constant.TUANGOU_POSITIONNAME);
+					String positionid = c
+							.getString(Constant.TUANGOU_POSITIONID);
+					String spname = c.getString(Constant.TUANGOU_NMAE);
+					String biaoti = c.getString(Constant.TUANGOU_TGBIAOTI);
+					String fbiaoti = c.getString(Constant.TUANGOU_TGFUBIAOTI);
+					String yemian = c.getString(Constant.TUANGOU_YEMIAN);
+					String tgid = c.getString(Constant.TUANGOU_TGID);
+					String dianzhu = c.getString(Constant.TUANGOU_DIANZHU);
+					String fenlei = c.getString(Constant.TUANGOU_FEILEI);
+
+					TuanGuangGao g = new TuanGuangGao();
+
+					g.setId(id);
+					g.setEptname(eptname);
+					g.setDiznzhu(dianzhu);
+					g.setPosationname(positionname);
+					g.setTgbiaoti(biaoti);
+					g.setTgfubiaoti(fbiaoti);
+					g.setTgid(tgid);
+					g.setTgimg(img);
+					g.setYemian(yemian);
+					g.setSpname(spname);
+					g.setPosationid(positionid);
+					g.setFenlei(fenlei);
+					list.add(g);
 				}
 
 			} catch (JSONException e) {
@@ -232,10 +402,10 @@ public class JSONUtil {
 	 * @param jsonString
 	 * @return
 	 */
-	public static ArrayList<HashMap<String, String>> getMYDingDan(
-			String jsonString) {
-		ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+	public static ArrayList<MyDianDan> getMYDingDan(String jsonString) {
+		ArrayList<MyDianDan> list = new ArrayList<MyDianDan>();
 		JSONArray contacts = null;
+		MyDianDan dan = null;
 		Log.i("cheng", "jsonString" + jsonString);
 		if (jsonString != null) {
 			try {
@@ -244,28 +414,31 @@ public class JSONUtil {
 
 				for (int i = 0; i < contacts.length(); i++) {
 					JSONObject c = contacts.getJSONObject(i);
+					dan = new MyDianDan();
+					dan.setId(c.getString(Constant.DINGDAN_ID));
+					dan.setSpname(c.getString(Constant.DINGDAN_SP));
+					dan.setTgbiaoti(c.getString(Constant.DINGDAN_BIANTI));
+					dan.setSpimg(c.getString(Constant.DINGDAN_IMG));
+					dan.setValuetime(c.getString(Constant.DINGDAN_TIME));
+					dan.setMoveuser(c.getString(Constant.DINGDAN_MOVERUSER));
+					dan.setNumber2(c.getString(Constant.DINGDAN_NUMBER2));
+					dan.setOrdermethod(c
+							.getString(Constant.DINGDAN_ORDERMETHOD));
+					dan.setOrdernum(c.getString(Constant.DINGDAN_ORDNUM));
 
-					String id = c.getString(Constant.DINGDAN_ID);
-					String name = c.getString(Constant.DINGDAN_SP);
-					String biaoti = c.getString(Constant.DINGDAN_BIANTI);
-					String fbiaoti = c.getString(Constant.DINGDAN_FBIAOTI);
-					String count = c.getString(Constant.DINGDAN_COUNT);
-					String pwd = c.getString(Constant.DINGDAN_PWD);
-					String start = c.getString(Constant.DINGDAN_START);
-					String end = c.getString(Constant.DINGDAN_END);
+					dan.setOrdertime(c.getString(Constant.DINGDAN_ORDTIME));
+					dan.setRemark(c.getString(Constant.DINGDAN_REMARK));
+					dan.setSpnumber(c.getString(Constant.DINGDAN_SPNAMBER));
+					dan.setSpprice(c.getString(Constant.DINGDAN_SPPRICE));
+					dan.setNumber3(c.getString(Constant.DINGDAN_NUMBER3));
+					dan.setTgprice(c.getString(Constant.DINGDAN_TGPRICE));
+					dan.setSptext(c.getString(Constant.DINGDAN_SPTEXT));
+					dan.setSpdianpu(c.getString(Constant.DINGDAN_SPDIANPU));
+					dan.setZongjia(c.getString(Constant.DINGDAN_ZONGJIA));
+					dan.setOrderphone(c.getString(Constant.DINGDAN_ORDERPHONE));
+					dan.setFubiaoti(c.getString(Constant.DINGDAN_FBIAOTI));
 
-					HashMap<String, String> contactHashMap = new HashMap<String, String>();
-
-					contactHashMap.put(Constant.TUANGOU_ID, id);
-					contactHashMap.put(Constant.DINGDAN_SP, name);
-					contactHashMap.put(Constant.DINGDAN_BIANTI, biaoti);
-					contactHashMap.put(Constant.DINGDAN_FBIAOTI, fbiaoti);
-					contactHashMap.put(Constant.DINGDAN_COUNT, count);
-					contactHashMap.put(Constant.DINGDAN_PWD, pwd);
-					contactHashMap.put(Constant.DINGDAN_START, start);
-					contactHashMap.put(Constant.DINGDAN_END, end);
-
-					list.add(contactHashMap);
+					list.add(dan);
 				}
 
 			} catch (JSONException e) {
@@ -341,4 +514,91 @@ public class JSONUtil {
 		}
 		return list;
 	}
+
+	/**
+	 * 我的答题
+	 * 
+	 * @param jsonString
+	 * @return
+	 */
+	public static ArrayList<HashMap<String, String>> getDaTi(String jsonString) {
+		ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+		JSONArray contacts = null;
+		if (jsonString != null) {
+			try {
+				JSONObject jsonObject = new JSONObject(jsonString);
+				contacts = jsonObject.getJSONArray("umassage");
+
+				for (int i = 0; i < contacts.length(); i++) {
+					JSONObject c = contacts.getJSONObject(i);
+
+					String id = c.getString(Constant.DATI_ID);
+					String question = c.getString(Constant.DATI_QUESTION);
+					String anwer1 = c.getString(Constant.DATI_ANSWER1);
+					String anwer2 = c.getString(Constant.DATI_ANSWER2);
+					String anwer3 = c.getString(Constant.DATI_ANSWER3);
+					String anwer4 = c.getString(Constant.DATI_ANSWER4);
+
+					HashMap<String, String> contactHashMap = new HashMap<String, String>();
+
+					contactHashMap.put(Constant.DATI_ID, id);
+					contactHashMap.put(Constant.DATI_QUESTION, question);
+					contactHashMap.put(Constant.DATI_ANSWER1, anwer1);
+					contactHashMap.put(Constant.DATI_ANSWER2, anwer2);
+					contactHashMap.put(Constant.DATI_ANSWER3, anwer3);
+					contactHashMap.put(Constant.DATI_ANSWER4, anwer4);
+
+					list.add(contactHashMap);
+				}
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return list;
+	}
+
+	/**
+	 * 城市
+	 * 
+	 * @param jsonString
+	 * @return
+	 */
+	public static ArrayList<HashMap<String, String>> getCity(String jsonString) {
+		ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+		JSONArray contacts = null;
+		if (jsonString != null) {
+			try {
+				JSONObject jsonObject = new JSONObject(jsonString);
+				contacts = jsonObject.getJSONArray("umassage");
+
+				for (int i = 0; i < contacts.length(); i++) {
+					JSONObject c = contacts.getJSONObject(i);
+
+					String id = c.getString(Constant.CITY_ID);
+					String qu_id = c.getString(Constant.CITY_DIQUID);
+					String name = c.getString(Constant.CITY_QUYUNAME);
+					String updata = c.getString(Constant.CITY_UPDATA);
+					String create = c.getString(Constant.CITY_CREATED);
+
+					HashMap<String, String> contactHashMap = new HashMap<String, String>();
+
+					contactHashMap.put(Constant.CITY_ID, id);
+					contactHashMap.put(Constant.CITY_DIQUID, qu_id);
+					contactHashMap.put(Constant.CITY_QUYUNAME, name);
+					contactHashMap.put(Constant.CITY_UPDATA, updata);
+					contactHashMap.put(Constant.CITY_CREATED, create);
+
+					list.add(contactHashMap);
+				}
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return list;
+	}
+
 }

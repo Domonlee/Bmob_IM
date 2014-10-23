@@ -3,7 +3,10 @@ package com.bmob.im.newview;
 import com.bmob.im.demo.R;
 import com.bmob.im.demo.R.layout;
 import com.bmob.im.demo.R.menu;
+import com.bmob.im.demo.bean.MyDianDan;
 import com.bmob.im.demo.util.Constant;
+import com.bmob.im.demo.util.ImageLoadOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -20,7 +23,13 @@ public class OrderInfoItemActivity extends Activity {
 	private TextView youxiaoqi;
 	private TextView pwd;
 	private TextView zhuangtai;
-	private TextView price;
+	private TextView text;
+
+	private TextView dnumber;
+	private TextView dphone;
+	private TextView dtime;
+	private TextView dcount;
+	private TextView dzongjia;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +46,31 @@ public class OrderInfoItemActivity extends Activity {
 		youxiaoqi = (TextView) findViewById(R.id.tv_dingdan_youxiaoqi);
 		pwd = (TextView) findViewById(R.id.tv_mima_num);
 		zhuangtai = (TextView) findViewById(R.id.tv_order_zhuangtai);
-		price = (TextView) findViewById(R.id.tv_order_price);
+		text = (TextView) findViewById(R.id.tv_order_price);
+		dnumber = (TextView) findViewById(R.id.tv_order_dingdanhao);
+		dphone = (TextView) findViewById(R.id.tv_order_phonenumber);
+		dtime = (TextView) findViewById(R.id.tv_order_time);
+		dcount = (TextView) findViewById(R.id.tv_order_count);
+		dzongjia = (TextView) findViewById(R.id.tv_order_zongjia);
 
 	}
 
 	private void setdata() {
 		Intent in = getIntent();
-		biaoti.setText(in.getStringExtra(Constant.DINGDAN_BIANTI));
-		fbiaoti.setText(in.getStringExtra(Constant.DINGDAN_FBIAOTI));
-		pwd.setText(in.getStringExtra(Constant.DINGDAN_PWD));
+		MyDianDan dan = (MyDianDan) in.getSerializableExtra(Constant.KEY);
+		biaoti.setText(dan.getTgbiaoti());
+		fbiaoti.setText(dan.getFubiaoti());
+		youxiaoqi.setText(dan.getValuetime());
+		text.setText(dan.getRemark());
+		dnumber.setText(dan.getSpnumber());
+		dphone.setText(dan.getOrderphone());
+		dtime.setText(dan.getOrdertime());
+		dcount.setText(dan.getNumber3());
+		dzongjia.setText(dan.getZongjia());
+		ImageLoader.getInstance().displayImage(
+				Constant.IMAGE_BASE_URL
+						+ in.getStringExtra(Constant.DINGDAN_IMG), image,
+				ImageLoadOptions.getOptions());
 
 	}
 

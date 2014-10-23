@@ -8,17 +8,19 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.RadioButton;
+import android.widget.Toast;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.bmob.im.demo.R;
 import com.bmob.im.demo.adapter.AllFenLeiAdapter;
-import com.bmob.im.demo.adapter.TuanGouAdapter;
-import com.bmob.im.demo.ui.SingleExchangeInfoActivity;
-import com.bmob.im.demo.ui.fragment.ShopTopOneFragment;
+import com.bmob.im.demo.bean.TuanGuangGao;
 import com.bmob.im.demo.ui.fragment.TuanGouFuFragment;
-import com.bmob.im.demo.ui.fragment.TuanGouZhuFragment;
 import com.bmob.im.demo.util.Constant;
 import com.bmob.im.demo.util.HttpUtil;
 import com.bmob.im.demo.util.JSONUtil;
@@ -33,8 +35,7 @@ public class AllFenLeiTask extends AsyncTask<Void, Void, Void> {
 	private ProgressDialog pDialog;
 	private Activity activity;
 	private ArrayList<HashMap<String, String>> contactList;
-	private ShopTopOneFragment fragment;
-	private TuanGouZhuFragment zhuFragment;
+	private ArrayList<TuanGuangGao> imagelist;
 	private TuanGouFuFragment fuFragment;
 	private View footview;
 	private String url;
@@ -44,20 +45,18 @@ public class AllFenLeiTask extends AsyncTask<Void, Void, Void> {
 		this.contactList = contactList;
 	}
 
+	public void setAdapter(AllFenLeiAdapter adapter) {
+		this.adapter = adapter;
+	}
+
 	public void setUrl(String url) {
 		this.url = url;
+		Constant.BEFORE_TUANGOU_URL = url;
+		Constant.URL_TYPE = 0;
 	}
 
 	public void setFootview(View footview) {
 		this.footview = footview;
-	}
-
-	public void setFragment(ShopTopOneFragment fragment) {
-		this.fragment = fragment;
-	}
-
-	public void setZhuFragment(TuanGouZhuFragment zhuFragment) {
-		this.zhuFragment = zhuFragment;
 	}
 
 	public void setFuFragment(TuanGouFuFragment fuFragment) {
@@ -66,6 +65,8 @@ public class AllFenLeiTask extends AsyncTask<Void, Void, Void> {
 
 	public AllFenLeiTask(Activity activity) {
 		this.activity = activity;
+		footview = LayoutInflater.from(activity).inflate(
+				R.layout.listview_footview, null);
 	}
 
 	public void setList(ListView list) {
@@ -74,11 +75,16 @@ public class AllFenLeiTask extends AsyncTask<Void, Void, Void> {
 
 	@Override
 	protected Void doInBackground(Void... params) {
-		Log.i("cheng", "url" + url);
+		Log.i("cheng", "allurl" + url);
 		String jsonString = HttpUtil.httpGet(url);
-		if (jsonString != null) {
+		String imjString = HttpUtil.httpGet(Constant.TUANGOU_GUANGGAO_URL);
 
+		if (jsonString != null) {
 			contactList = JSONUtil.getTuanGou(jsonString);
+			imagelist = JSONUtil.getTuanGouGuanggao(imjString);
+			Log.i("cheng", "contactList" + contactList.size());
+			Log.i("cheng", "imagelist" + imagelist.size());
+
 		}
 		return null;
 	}
@@ -86,42 +92,51 @@ public class AllFenLeiTask extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected void onPostExecute(Void result) {
 		super.onPostExecute(result);
-		if (pDialog.isShowing()) {
-			pDialog.dismiss();
-		}
-		// ListAdapter adapter = new SimpleAdapter(activity, contactList,
-		// R.layout.listview_exchange_item, new String[] {
-		// Constant.DINGDAN_SP, Constant.DINGDAN_BIANTI,
-		// Constant.DINGDAN_FBIAOTI }, new int[] {
-		// R.id.tv_exchange_item_info,
-		// R.id.tv_exchange_item_goodsname,
-		// R.id.tv_exchange_item_price });
+
 		if (adapter == null) {
 			adapter = new AllFenLeiAdapter();
 			adapter.setActivity(activity);
-			adapter.setList(contactList);
-			adapter.setList(zhuFragment.list);
-			adapter.setFragment(fragment);
+			adapter.setImagelist(imagelist);
 			adapter.setFuFragment(fuFragment);
-			adapter.setZhuFragment(zhuFragment);
-			zhuFragment.list.setAdapter(adapter);
+			adapter.setList(contactList);
+			if (fuFragment.list.getFooterViewsCount() == 0) {
+
+				fuFragment.list.addFooterView(footview);
+			}
+
+			fuFragment.list.setAdapter(adapter);
 		} else {
 
 			adapter.notifyDataSetChanged();
 		}
 
-		zhuFragment.list.setAdapter(adapter);
-		if (zhuFragment.list.getFooterViewsCount() == 0) {
+		RadioButton textView = (RadioButton) footview
+				.findViewById(R.id.tv_listview_foot);
+		textView.setOnClickListener(new OnClickListener() {
 
-			zhuFragment.list.addFooterView(footview);
-		}
+			@Override
+			public void onClick(View v) {
 
-		zhuFragment.list.setOnItemClickListener(new OnItemClickListener() {
+				Constant.COUNT += 1;
+				int n = Constant.COUNT - 1;
+				AllFenLeiTask task = new AllFenLeiTask(activity);
+				task.setContactList(contactList);
+				task.setList(fuFragment.list);
+				task.setFuFragment(fuFragment);
+				task.setAdapter(adapter);
+				task.setUrl(Constant.BEFORE_TUANGOU_URL.replace("page=" + n,
+						"page=" + Constant.COUNT));
+
+				task.execute();
+			}
+		});
+
+		fuFragment.list.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int position,
 					long id) {
-				String type = contactList.get(position - 1).get(
+				String type = contactList.get(position - 2).get(
 						Constant.TUANGOU_TYPE);
 				Intent intent = new Intent();
 				if (type.equals("≤Õ“˚√¿ ≥")) {
@@ -139,39 +154,42 @@ public class AllFenLeiTask extends AsyncTask<Void, Void, Void> {
 				}
 
 				intent.putExtra(Constant.TUANGOU_NMAE,
-						contactList.get(position - 1)
+						contactList.get(position - 2)
 								.get(Constant.TUANGOU_NMAE));
 				intent.putExtra(Constant.TUANGOU_EPT,
-						contactList.get(position - 1).get(Constant.TUANGOU_EPT));
+						contactList.get(position - 2).get(Constant.TUANGOU_EPT));
 				intent.putExtra(Constant.TUANGOU_PKC,
-						contactList.get(position - 1).get(Constant.TUANGOU_PKC));
+						contactList.get(position - 2).get(Constant.TUANGOU_PKC));
 				intent.putExtra(Constant.TUANGOU_IMG,
-						contactList.get(position - 1).get(Constant.TUANGOU_IMG));
+						contactList.get(position - 2).get(Constant.TUANGOU_IMG));
 				intent.putExtra(
 						Constant.TUANGOU_PTEXT,
-						contactList.get(position - 1).get(
+						contactList.get(position - 2).get(
 								Constant.TUANGOU_PTEXT));
 				intent.putExtra(
 						Constant.TUANGOU_PJIGE,
-						contactList.get(position - 1).get(
+						contactList.get(position - 2).get(
 								Constant.TUANGOU_PJIGE));
 				intent.putExtra(
 						Constant.TUANGOU_XIAOLIANG,
-						contactList.get(position - 1).get(
+						contactList.get(position - 2).get(
 								Constant.TUANGOU_XIAOLIANG));
 				intent.putExtra(Constant.TUANGOU_CJTG,
-						contactList.get(position - 1)
+						contactList.get(position - 2)
 								.get(Constant.TUANGOU_CJTG));
 				intent.putExtra(Constant.TUANGOU_CGQG,
-						contactList.get(position - 1)
+						contactList.get(position - 2)
 								.get(Constant.TUANGOU_CGQG));
 				intent.putExtra(Constant.TUANGOU_TYPE,
-						contactList.get(position - 1)
+						contactList.get(position - 2)
 								.get(Constant.TUANGOU_TYPE));
 
 				activity.startActivity(intent);
 			}
 		});
+		if (pDialog.isShowing()) {
+			pDialog.dismiss();
+		}
 
 	}
 

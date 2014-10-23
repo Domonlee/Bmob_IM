@@ -1,12 +1,6 @@
 package com.bmob.im.demo.ui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.json.JSONArray;
-
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,8 +11,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.baidu.frontia.Frontia;
-import com.baidu.frontia.FrontiaApplication;
+import com.bmob.im.demo.CustomApplcation;
 import com.bmob.im.demo.R;
 import com.bmob.im.demo.ui.fragment.ShopTopOneFragment;
 import com.bmob.im.demo.ui.fragment.ShopTopThreeFragment;
@@ -37,15 +30,17 @@ public class ShopGroupByActivity extends FragmentBase {
 	private int tindex;
 	private int currenttTabIndex = 0;
 	private View view;
+
 	private Activity activity;
-	private ProgressDialog pDialog;
-	private JSONArray contacts;
 	private TextView share;
-	private ArrayList<HashMap<String, String>> contactList = new ArrayList<HashMap<String, String>>();
 	private boolean isInit;
 
 	public void setActivity(Activity activity) {
 		this.activity = activity;
+	}
+
+	public void setView(View view) {
+		this.view = view;
 	}
 
 	@Override
@@ -56,10 +51,12 @@ public class ShopGroupByActivity extends FragmentBase {
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		view = inflater.inflate(R.layout.fragment_shop, container, false);
-		share = (TextView) view.findViewById(R.id.tv_shop_top_share);
-		//isInit = Frontia.init(getActivity(), Constant.API_KEY);
-		return view;
+		View v = inflater.inflate(R.layout.fragment_shop, container, false);
+		share = (TextView) v.findViewById(R.id.tv_shop_top_share);
+		view = LayoutInflater.from(activity).inflate(
+				R.layout.listview_footview, null);
+		// isInit = Frontia.init(getActivity(), Constant.API_KEY);
+		return v;
 	}
 
 	@Override
@@ -86,6 +83,9 @@ public class ShopGroupByActivity extends FragmentBase {
 				selectFargment(tindex, currenttTabIndex);
 				XianShiGouTask task = new XianShiGouTask(activity);
 				task.setList(shopTopTwoFragment.list);
+				task.setUrl(Constant.XIANSHIQIANGGOU);
+				task.setTwoFragment(shopTopTwoFragment);
+				task.setView(view);
 				task.execute();
 
 			}
@@ -101,6 +101,7 @@ public class ShopGroupByActivity extends FragmentBase {
 
 				JiFenTask task = new JiFenTask(activity);
 				task.setList(shopTopThreeFragment.list);
+				task.setUrl(Constant.JIFENDUIHUAN_URL);
 				task.execute();
 
 			}
@@ -137,7 +138,7 @@ public class ShopGroupByActivity extends FragmentBase {
 			@Override
 			public void onClick(View v) {
 				if (isInit) {
-
+					CustomApplcation.mInstance.showShare();
 				}
 			}
 		});

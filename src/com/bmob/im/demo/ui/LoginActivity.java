@@ -124,7 +124,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				Intent intent = new Intent(LoginActivity.this,
 						MainInActivity.class);
 				startActivity(intent);
-				//finish();
+				finish();
 			}
 
 			@Override

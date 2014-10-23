@@ -4,7 +4,7 @@
     <string name="app_name">我爱锁屏</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-
+    <string name="action_share">分享</string>
     <!-- login&register -->
     <string name="login_username_hint">用户名/手机</string>
     <string name="login_password_hint">请输入密码</string>
@@ -89,5 +89,10 @@
     <string name="title_activity_main_jiu_dian">MainJiuDianActivity</string>
     <string name="title_activity_main_qi_ta">MainQiTaActivity</string>
     <string name="title_activity_da_ti">DaTiActivity</string>
+    <string name="title_activity_news">NewsActivity</string>
+    <string name="title_activity_news_info">NewsInfoActivity</string>
+    <string name="title_activity_shequ">ShequActivity</string>
+    <string name="title_activity_shequ_info">ShequInfoActivity</string>
+    <string name="title_activity_dui_huan">DuiHuanActivity</string>
 
 </resources>

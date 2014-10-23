@@ -25,7 +25,6 @@ public class ShopGroupFragmen extends Fragment {
 
 	private void init(View view) {
 		list = (ListView) view.findViewById(R.id.lv_shopgroup_list);
-		Log.i("cheng", "333333+" + list);
 		back = (ImageButton) view.findViewById(R.id.ib_shopgroup);
 	}
 

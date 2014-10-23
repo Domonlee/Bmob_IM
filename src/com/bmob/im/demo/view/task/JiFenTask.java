@@ -19,11 +19,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class JiFenTask extends AsyncTask<Void, Void, Void> {
@@ -31,12 +34,25 @@ public class JiFenTask extends AsyncTask<Void, Void, Void> {
 	private ProgressDialog pDialog;
 	private Activity activity;
 	private View view;
+	private String url;
 	private ArrayList<HashMap<String, String>> contactList = new ArrayList<HashMap<String, String>>();
+	private ArrayList<HashMap<String, String>> imagelist;
+	private JiFenAdapter adapter;
 
 	public JiFenTask(Activity activity) {
 		this.activity = activity;
 		view = LayoutInflater.from(activity).inflate(
 				R.layout.listview_footview, null);
+	}
+
+	public void setAdapter(JiFenAdapter adapter) {
+		this.adapter = adapter;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+		Constant.BEFORE_URL = url;
+		Constant.URL_TYPE = 3;
 	}
 
 	public void setList(ListView list) {
@@ -45,9 +61,10 @@ public class JiFenTask extends AsyncTask<Void, Void, Void> {
 
 	@Override
 	protected Void doInBackground(Void... params) {
-		String jsonString = HttpUtil.httpGet(Constant.JIFENDUIHUAN_URL);
+		String jsonString = HttpUtil.httpGet(url);
 		if (jsonString != null) {
 			contactList = JSONUtil.getJiFen(jsonString);
+			imagelist = JSONUtil.getJiFenGuanggao(jsonString);
 		}
 		return null;
 	}
@@ -58,21 +75,38 @@ public class JiFenTask extends AsyncTask<Void, Void, Void> {
 		if (pDialog.isShowing()) {
 			pDialog.dismiss();
 		}
-		// ListAdapter adapter = new SimpleAdapter(activity, contactList,
-		// R.layout.listview_exchange_item, new String[] {
-		// Constant.JIFEN_ID, Constant.JIFEN_NAME,
-		// Constant.JIFEN_SCORE }, new int[] {
-		// R.id.tv_exchange_item_info,
-		// R.id.tv_exchange_item_goodsname,
-		// R.id.tv_exchange_item_price });
-		JiFenAdapter adapter = new JiFenAdapter();
-		adapter.setActivity(activity);
-		adapter.setList(contactList);
-		list.setAdapter(adapter);
-		if (list.getFooterViewsCount() == 0) {
+		if (adapter == null) {
 
-			list.addFooterView(view);
+			adapter = new JiFenAdapter();
+			adapter.setActivity(activity);
+			adapter.setList(contactList);
+			adapter.setImagelist(imagelist);
+			if (list.getFooterViewsCount() == 0) {
+
+				list.addFooterView(view);
+			}
+			list.setAdapter(adapter);
+		} else {
+			adapter.notifyDataSetChanged();
 		}
+
+		RadioButton tvfoot = (RadioButton) view
+				.findViewById(R.id.tv_listview_foot);
+		tvfoot.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				
+				Constant.COUNT += 1;
+				int n = Constant.COUNT - 1;
+				JiFenTask task = new JiFenTask(activity);
+				task.setList(list);
+				task.setAdapter(adapter);
+				task.setUrl(url.replace("page=" + n, "page=" + Constant.COUNT));
+				task.execute();
+
+			}
+		});
 		list.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override

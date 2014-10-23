@@ -1,27 +1,20 @@
 package com.bmob.im.demo.ui.fragment;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
-import org.json.JSONArray;
-
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bmob.im.demo.R;
 import com.bmob.im.demo.ui.FragmentBase;
-import com.bmob.im.demo.ui.NewFriendActivity;
-import com.bmob.im.demo.view.task.MyDiandanTask;
 
 public class ShopTopTwoFragment extends FragmentBase {
 
@@ -31,9 +24,7 @@ public class ShopTopTwoFragment extends FragmentBase {
 	private String dateString;// 获取当前时间和截止时间的时间差
 	private int mHour;
 	public ListView list;
-	
-
-	
+	public LinearLayout rl;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -73,9 +64,10 @@ public class ShopTopTwoFragment extends FragmentBase {
 	}
 
 	private void initView() {
+		rl = (LinearLayout) findViewById(R.id.ll_top_two);
 		tv_time = (TextView) findViewById(R.id.tv_fragment_shop_limit_time);
 		list = (ListView) findViewById(R.id.lv_xianshiqiang);
-		
+
 	}
 
 	class TimeCount implements Runnable {

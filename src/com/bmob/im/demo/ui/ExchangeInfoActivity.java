@@ -31,7 +31,7 @@ import com.bmob.im.demo.R;
 import com.bmob.im.demo.util.Constant;
 import com.bmob.im.demo.util.MyHttp;
 import com.bmob.im.demo.view.task.JiFenTask;
-import com.bmob.im.demo.view.task.MyDiandanTask;
+import com.bmob.im.demo.view.task.CityTask;
 import com.bmob.im.demo.view.task.MyJiFenTask;
 
 public class ExchangeInfoActivity extends LeftMenuInfoActivityBase {

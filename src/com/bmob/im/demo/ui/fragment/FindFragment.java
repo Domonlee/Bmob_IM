@@ -12,11 +12,13 @@ import android.widget.TextView;
 import com.bmob.im.demo.R;
 import com.bmob.im.demo.ui.AddFriendActivity;
 import com.bmob.im.demo.ui.FragmentBase;
-import com.bmob.im.demo.ui.MainActivity;
+import com.bmob.im.newview.NewsActivity;
+import com.bmob.im.newview.ShequActivity;
 
 public class FindFragment extends FragmentBase implements OnClickListener {
 	private TextView tv_friend;
-	private TextView xiaoxi;
+	private TextView shequ;
+	private TextView news;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -29,12 +31,14 @@ public class FindFragment extends FragmentBase implements OnClickListener {
 		super.onActivityCreated(savedInstanceState);
 		initView();
 		tv_friend.setOnClickListener(this);
-		xiaoxi.setOnClickListener(this);
+		shequ.setOnClickListener(this);
+		news.setOnClickListener(this);
 	}
 
 	private void initView() {
+		news = (TextView) findViewById(R.id.tv_find_news);
 		tv_friend = (TextView) findViewById(R.id.tv_find_myfriends);
-		xiaoxi = (TextView) findViewById(R.id.tv_find_messagepush);
+		shequ = (TextView) findViewById(R.id.tv_find_shequ);
 	}
 
 	@Override
@@ -48,8 +52,12 @@ public class FindFragment extends FragmentBase implements OnClickListener {
 			// getChildFragmentManager().beginTransaction().add(R.id.fragment_order_container
 			// arg1)
 			break;
-		case R.id.tv_find_messagepush:
-			Intent intent1 = new Intent(getActivity(), MainActivity.class);
+		case R.id.tv_find_shequ:
+			Intent intent2 = new Intent(getActivity(), ShequActivity.class);
+			startActivity(intent2);
+			break;
+		case R.id.tv_find_news:
+			Intent intent1 = new Intent(getActivity(), NewsActivity.class);
 			startActivity(intent1);
 			break;
 
@@ -58,5 +66,4 @@ public class FindFragment extends FragmentBase implements OnClickListener {
 		}
 
 	}
-
 }
