@@ -118,8 +118,6 @@ public class LeftMenuBottomFragment extends Fragment {
 					Intent myIntent = null;
 					switch (position) {
 					case 0:
-						// myIntent = new Intent(getActivity(),
-						// MessageInfoActivity.class);
 						myIntent = new Intent(mContext, MainActivity.class);
 						break;
 					case 1:
